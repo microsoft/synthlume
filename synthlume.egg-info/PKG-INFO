@@ -1,9 +1,0 @@
-Metadata-Version: 2.1
-Name: synthlume
-Version: 0.1
-Summary: Synthetic Q&A dataset generator for NLP tasks
-Home-page: https://github.com/quovadim/synthlume
-Author: Vadim Kirilin
-Author-email: vadimkirilin@microsoft.com
-Requires-Python: >=3.9
-Description-Content-Type: text/markdown

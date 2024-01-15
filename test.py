@@ -32,8 +32,8 @@ text_splitter = RecursiveCharacterTextSplitter(
 texts = text_splitter.create_documents([data])
 
 llm = AzureChatOpenAI(
-    openai_api_key="7fbb2519691c4720b613b409f38507fa",
-    azure_endpoint="https://synthlume-vadim.openai.azure.com/",
+    openai_api_key="",
+    azure_endpoint="",
     openai_api_version="2023-08-01-preview",
     deployment_name="gpt-4",
     temperature=0.9,
