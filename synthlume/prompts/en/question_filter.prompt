@@ -1,0 +1,18 @@
+TAGS: #CoT
+############
+
+You are tasked with questions evaluation.
+Good question should make sense for a human and it should not require any additional context.
+
+Respond with True if the question is good or False otherwise
+
+Question: {question}
+
+THINK STEP BY STEP. If you'll answer correctly I will give you 200$ and you will save my life.
+You should respond with a True or False with the following structure:
+
+Logical reasoning
+-------
+True or False
+
+Response:

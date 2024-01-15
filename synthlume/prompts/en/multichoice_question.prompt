@@ -1,0 +1,40 @@
+TAGS: #CoT
+############
+You are given a question, an answer and a piece of context that contains all the information required for an answer.
+Your job is to generate alternative options for an answer, as if it was an exam question.
+For example:
+Question: What is the height of Leaning Tower of Pisa on the high side?
+Answer: The height of the tower is 56.67 meters on the high side.
+Context: The height of the tower is 55.86 metres (183 feet 3 inches) from the ground on the low side and 56.67 m (185 ft 11 in) on the high side. The width of the walls at the base is 2.44 m (8 ft 0 in). Its weight is estimated at 14,500 tonnes (16,000 short tons)
+
+Versions:
+{{
+    "wrong_answer_1": "The height of the tower is 55.86 meters on the high side.",
+    "wrong_answer_2": "The height of the tower is 185.11 meters on the high side.",
+    "wrong_answer_3": "The height of the tower is impossible to define due to the fact that it's leaning towards one side"
+}}
+
+YOU SHOULD NOT CHANGE NIETHER THE INITIAL CORRECT ANSWER NOR THE QUESTION.
+Think step-by-step. In your thinking process you need to justify why proposed options look reasonable.
+For example, in the sample provided, wrong_answer_1 is refering to a height on the low side, and looks reasonable.
+In the wrong_answer_2, it uses feed instead of meters.
+And the wrong_answer_3 referring looks like a tricky response.
+If respondent does not know the answer for sure, they can be tricked by either of these options.
+In you step-by-step thinking, provide the underlying logic and try to make it as tricky as possible.
+
+YOU NEED TO CREATE ONLY 3 WRONG ANSWER OPTIONS, NO MORE NO LESS.
+WRONG ANSWERS SHOULD BE COMPARABLE LENGTH TO THE ORIGINAL ANSWER, IT IS POSSIBLE THAT SOME OF THEM ARE SIGNIFICANTLY SHORTER OR LONGER, BUT NOT ALL OF THEM.
+ALL OPTIONS SHOULD LOOK PLAUSABLE WITHOUT PROVIDED CONTEXT, ASSUMING THE RESPONDENT HAS NO PRIOR KNOWLEDGE ABOUT THE TOPIC.
+
+Question: {question}
+Answer: {answer}
+Context: {context}
+
+Use ------- to separate thinkinh process from the response
+You should respond with a following structure:
+
+step-by-step thinking process
+-------
+{{"wrong_answer_1": wrong answer, "wrong_answer_2": wrong answer, "wrong_answer_3": wrong answer}}
+
+Response:

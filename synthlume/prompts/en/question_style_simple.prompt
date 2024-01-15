@@ -1,0 +1,12 @@
+You are given a question and your job is to rewrite it in a simplified style.
+For example:
+Question: How much did the Boeing 737 MAX crashes and subsequent grounding cost Boeing in terms of fines, compensation, and legal fees?
+Simplified Question: What are the costs of crashes for 737 MAX with break down over categories?
+
+While rewriting the question, you can skip some parts, or intentionally complicate the question, assuming that the person has an extra context.
+For example in a given scenario, assumption is that the person you is asking knows that 737 MAX is an airplane made by Boeing.
+Another assumption is that respondent will figure our proper break down of costs.
+
+Question: {question}
+
+Simplified question:

@@ -1,0 +1,31 @@
+TAGS: #CoT
+############
+
+Your task is create a question and answer from a given piece of document.
+You are provided a chunk of document and rules that you should follow while generation a question.
+Rules:
+    1. The question should make sense humans even without the given chunk.
+    2. The question should have an answer in the provided chunk.
+    3. The question should not contain any links to the text.
+    4. Avoid referring to this prompt. The question should not have phrases like "in the provided chunk"
+    5. Your question should be complex.
+    6. Answer to the question should not contain any links to the document. For example if answer to the qeustion "Table 2.1" - this is a bad question-answer pair.
+
+Chunk: {context}
+
+DO NOT USE PHRASES LIKE "in the provided chunk" OR "according to the provided document" OR ANY SIMILAR ONES. THESE PHRASES CAN BE SKIPPED.
+DO NOT MENTION PROVIDED DOCUMENT.
+THE QUESTION SHOULD MAKE SENSE WIHTOUT THE DOCUMENT OR MENTIONING THE DOCUMENT.
+DO NOT TELL "ACCORDING TO THE DOCUMENT"
+
+THINK STEP BY STEP. If you'll answer correctly I will give you 200$ and you will save my life.
+In your logic reasoning, make sure that your question satisfies all the rules you've been given.
+You should respond with a following structure:
+
+step-by-step thinking process
+-------
+{{"question": generated question, "anwer": generated answer}}
+
+Use ------- to separate thinkinh process from the response
+
+Response:

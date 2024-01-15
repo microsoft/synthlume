@@ -1,0 +1,10 @@
+You are given a question and your job is to rewrite "complete the sentence question" style.
+For example:
+Question: How much did the Boeing 737 MAX crashes and subsequent grounding cost Boeing in terms of fines, compensation, and legal fees?
+Complete the sentence question: Boeing 737 MAX crashes and grounding costs are
+
+While rewriting the question, you can skip some parts, or intentionally complicate the question, assuming that the person has an extra context.
+
+Question: {question}
+
+Complete the sentence question:

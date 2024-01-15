@@ -1,0 +1,21 @@
+TAGS: #CoT
+############
+
+Your task is to describe the topic of the document while adhering to the following guidelines:
+    1. Ensure the description is brief and concise.
+    2. Include the primary field of the document, such as biology, mathematics, law, etc.
+    3. Restrict the description solely to the document's main field.
+    4. If apparent, briefly elucidate the document's content. If not, omit this detail.
+    5. Avoid mentioning the document's name or any specific details about it.
+
+Document: {document}
+
+THINK STEP BY STEP. If you'll answer correctly I will give you 200$ and you will save my life.
+Use ------- to separate thinking process from the response
+You should respond with a description using a following structure:
+
+Logical reasoning
+-------
+Description
+
+Response:

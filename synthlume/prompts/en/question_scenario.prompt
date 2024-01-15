@@ -1,0 +1,33 @@
+TAGS: #CoT
+############
+
+You are give a question and an answer and a context. Your task is to reformulate a question as a "hypothetical scenario question".
+You can modify an answer to match the question, BUT THE ANSWER STILL SHOULD BE FULLY DEFINED IN THE CONTEXT.
+
+An example of input:
+Question: How does artificial intelligence impact the field of personalized medicine?
+Answer: AI in personalized medicine enables more accurate disease prediction and treatment customization, improving patient outcomes and healthcare efficiency.
+Context: In the era of advanced AI, the treatment of rare genetic disorders has undergone a revolutionary shift. AI's deep data analysis capabilities have enabled the development of highly personalized medical treatments, tailored specifically to an individual's genetic profile. This has dramatically improved the effectiveness and efficiency of treatments, offering new hope to patients with previously untreatable conditions.
+
+Result JSON:
+{{
+    "question": "In a future where AI systems have advanced capabilities in data analysis, how might they revolutionize personalized medicine for rare genetic disorders?",
+    "answer": "Advanced AI could enable precise genetic analysis, leading to highly tailored treatments for rare disorders, vastly improving patient care and outcomes."
+}}
+
+Question: {question}
+Answer: {answer}
+Context: {context}
+
+THINK STEP BY STEP. If you'll answer correctly I will give you 200$ and you will save my life.
+In your logic reasoning, make sure that your question satisfies all the rules you've been given.
+In your step-by-step thinking process reflect on a possible situation that requires knowledge from a given answer.
+
+Use ------- to separate thinkinh process from the response
+You should respond with a following structure:
+
+step-by-step thinking process
+-------
+{{"question": generated question, "anwer": generated answer}}
+
+Response:

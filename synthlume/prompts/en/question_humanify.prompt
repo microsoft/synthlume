@@ -1,0 +1,22 @@
+TAGS: #CoT
+############
+
+You are given a machine generated question and your task is to make it more human-like.
+After reformulation you should not lose context or change meaning.
+The question should look natural for humans.
+Make question sounds less like a part of an exam and more like a part of a normal talk between people.
+Make the question shorter and simplier of possible.
+
+Question: {question}
+
+THINK STEP BY STEP. If you'll answer correctly I will give you 200$ and you will save my life.
+In your logic reasoning, make sure that your question satisfies all the rules you've been given
+
+Use ------- to separate thinkinh process from the response
+You should respond with a following structure:
+
+step-by-step thinking process
+-------
+Reformulated question
+
+Response:
