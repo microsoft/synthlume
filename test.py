@@ -32,8 +32,8 @@ text_splitter = RecursiveCharacterTextSplitter(
 texts = text_splitter.create_documents([data])
 
 llm = AzureChatOpenAI(
-    openai_api_key="",
-    azure_endpoint="",
+    openai_api_key="7fbb2519691c4720b613b409f38507fa",
+    azure_endpoint="https://synthlume-vadim.openai.azure.com/",
     openai_api_version="2023-08-01-preview",
     deployment_name="gpt-4",
     temperature=0.9,
@@ -41,8 +41,24 @@ llm = AzureChatOpenAI(
 
 description_step = DescriptionStep(llm=llm, language="en")
 
-description = description_step.generate({"document": data[:2048]})
+description = description_step.generate(document=data[:2048])
 description = description[description_step.output_key]
+
+"""questions_generatoion_step = GenerateQuestionStep(llm=llm, language="en")
+multiple_choice_step = MultipleChoiceQuestionStep(llm=llm, language="en")
+humanify_question_step = HumanifyQuestionStep(llm=llm, language="en")
+scenario_question_step = ScenarioQuestionStep(llm=llm, language="en")
+
+pipe = questions_generatoion_step | (multiple_choice_step & humanify_question_step & scenario_question_step)
+
+res = pipe.generate(
+    context=texts[0].page_content,
+    description=description,
+)
+
+print(res)
+
+exit(0)"""
 
 questions_generatoion_step = GenerateQuestionStep(llm=llm, language="en")
 scenario_question_step = ScenarioQuestionStep(llm=llm, language="en")
@@ -55,7 +71,7 @@ results = []
 
 output_jsonl = open("data/output.jsonl", "w")
 
-for i, chunk in enumerate(texts):
+for i, chunk in enumerate(texts[:2]):
     chunk = chunk.page_content
     print(f"Chunk {i+1}/{len(texts)}")
     calls = {}
@@ -67,7 +83,7 @@ for i, chunk in enumerate(texts):
 
     calls["input"] = inputs
 
-    response = questions_generatoion_step.generate(inputs)
+    response = questions_generatoion_step.generate(**inputs)
 
     if response is None:
         print(f"Could not generate question, skipping")
@@ -76,7 +92,7 @@ for i, chunk in enumerate(texts):
     calls[questions_generatoion_step.name] = response
     print(f"Base generated question: {calls[questions_generatoion_step.name]['question']}")
 
-    response = multiple_choice_step.generate(calls[questions_generatoion_step.name])
+    response = multiple_choice_step.generate(**calls[questions_generatoion_step.name])
     if response is None:
         print(f"Could not generate multiple choice question, skipping")
     else:
@@ -87,28 +103,28 @@ for i, chunk in enumerate(texts):
         print(f"\tC) {calls[multiple_choice_step.name]['wrong_answer_2']}")
         print(f"\tD) {calls[multiple_choice_step.name]['wrong_answer_3']}")
 
-    response = scenario_question_step.generate(calls[questions_generatoion_step.name])
+    response = scenario_question_step.generate(**calls[questions_generatoion_step.name])
     if response is None:
         print(f"Could not generate scenario question, skipping")
     else:
         calls[scenario_question_step.name] = response
         print(f"Scenario generated question: {calls[scenario_question_step.name]['question']}")
 
-    response = humanify_question_step.generate(calls[questions_generatoion_step.name])
+    response = humanify_question_step.generate(**calls[questions_generatoion_step.name])
     if response is None:
         print(f"Could not generate human-like question, skipping")
     else:
         calls[humanify_question_step.name] = response
         print(f"Human-like generated question: {calls[humanify_question_step.name]['question']}")
 
-    response = question_style_simple_step.generate(calls[questions_generatoion_step.name])
+    response = question_style_simple_step.generate(**calls[questions_generatoion_step.name])
     if response is None:
         print(f"Could not generate simple question, skipping")
     else:
         calls[question_style_simple_step.name] = response
         print(f"Simple generated question: {calls[question_style_simple_step.name]['question']}")
 
-    response = complete_sentence_step.generate(calls[questions_generatoion_step.name])
+    response = complete_sentence_step.generate(**calls[questions_generatoion_step.name])
     if response is None:
         print(f"Could not generate complete sentence question, skipping")
     else:
@@ -152,5 +168,4 @@ df.to_csv("data/questions.csv", index=False)
 
 with open("data/questions.json", "w") as f:
     json.dump(results, f, indent=4)
-
 

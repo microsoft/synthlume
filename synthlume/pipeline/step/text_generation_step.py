@@ -15,11 +15,11 @@ class TextGenerationStep(Step):
         prompt = Prompt.from_data(language, self.prompt_name)
         super().__init__(llm, prompt)
 
-    def generate(self, inputs: dict[any]) -> dict[any]:
-        output = deepcopy(inputs)
+    def _generate(self, **kwargs) -> dict[any]:
+        output = deepcopy(kwargs)
         logger.debug(f"Using prompt {os.path.basename(self.prompt.path)}")
 
-        response = super().generate(inputs)
+        response = super()._generate(**output)
         output[self.output_key] = response
 
         return output
@@ -30,11 +30,17 @@ class HumanifyQuestionStep(TextGenerationStep):
     output_key: str = "question"
     prompt_name: str = "question_humanify"
 
+    def _generate(self, question: str, **kwargs) -> dict:
+        return super()._generate(question=question)
+
 class DescriptionStep(TextGenerationStep):
     name: str = "description"
 
     output_key: str = "description"
     prompt_name: str = "description"
+
+    def _generate(self, document: str, **kwargs) -> dict:
+        return super()._generate(document=document)
 
 class QuestionStyleSimpleStep(TextGenerationStep):
     name: str = "style_simple"
@@ -42,8 +48,14 @@ class QuestionStyleSimpleStep(TextGenerationStep):
     output_key: str = "question"
     prompt_name: str = "question_style_simple"
 
+    def _generate(self, question: str, **kwargs) -> dict:
+        return super()._generate(question=question)
+
 class QuestionStyleCompleteSentenseStep(TextGenerationStep):
     name: str = "style_complete_sentence"
 
     output_key: str = "question"
     prompt_name: str = "question_style_complete_sentence"
+
+    def _generate(self, question: str, **kwargs) -> dict:
+        return super()._generate(question=question)

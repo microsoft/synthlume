@@ -31,7 +31,7 @@ class CosineSimilarity(Metric):
 
         return max(scores), argmax
 
-    def evaluate(self, sentences_true: list[str], sentences_pred: list[str]) -> float:
+    def evaluate_scores(self, sentences_true: list[str], sentences_pred: list[str]):
         logger.debug(f"Evaluating {len(sentences_pred)} sentences against {len(sentences_true)} sentences")
         scores = []
         y_true = self._calculate_embeddings(sentences_true)
@@ -39,5 +39,9 @@ class CosineSimilarity(Metric):
         for sentence in sentences_pred:
             score, _ = self._compare_against_y(sentence, y_true)
             scores.append(score)
-        
+
+        return scores
+
+    def evaluate(self, sentences_true: list[str], sentences_pred: list[str]) -> float:
+        scores = self.evaluate_scores(sentences_true, sentences_pred)
         return np.mean(scores)

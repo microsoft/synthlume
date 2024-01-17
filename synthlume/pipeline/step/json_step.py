@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 from langchain_core.language_models.llms import LLM
 from synthlume.pipeline.step.step import Step
 from synthlume.prompts.prompt import Prompt
+from synthlume.pipeline.core.runnable import Runnable
 from synthlume.logging.logging import get_logger
 logger = get_logger(__name__)
 
@@ -24,17 +25,18 @@ class JSONStep(Step, ABC):
     def validate(self, json_response: any) -> bool:
         pass
 
-    def generate(self, inputs: dict[any]) -> any:
+    def _generate(self, **kwargs) -> any:
         json_response = None
 
         for r in range(self.retries):
-            response = super().generate(inputs)
+            response = super()._generate(**kwargs)
 
             try:
                 json_response = json.loads(response)
             except Exception as e:
                 logger.warning(f"Could not decode response as JSON, retrying ({r+1}/{self.retries})")
                 logger.warning(f"Error: {e}")
+                logger.warning(f"Response: {response}")
                 continue
 
             if self.validate(json_response):

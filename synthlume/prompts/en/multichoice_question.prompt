@@ -30,7 +30,8 @@ Question: {question}
 Answer: {answer}
 Context: {context}
 
-Use ------- to separate thinkinh process from the response
+USE ------- TO SEPARATE THINKING PROCESS FROM THE JSON
+
 You should respond with a following structure:
 
 step-by-step thinking process
