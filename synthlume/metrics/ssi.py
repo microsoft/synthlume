@@ -24,7 +24,7 @@ class SentenceSeparabilityIndex(Metric):
         self.embeddings = embeddings
         self.n_splits = n_splits
         self.random_state = random_state
-        self.regression_kwargs = regression_kwargs or {}
+        self.regression_kwargs = regression_kwargs or {"C": 0.1}
 
     def _calculate_embeddings(self, sentences: list[str]) -> list[list[float]]:
         logger.debug(f"Calculating embeddings for {len(sentences)} sentences")

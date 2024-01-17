@@ -18,10 +18,6 @@ embeddings = SentenceTransformerEmbeddings(
 #     deployment_name="",
 # )
 
-ssi = SentenceSeparabilityIndex(
-    embeddings=embeddings,
-)
-
 true_sentence_set = [
     "What inspired the development of the first computer programming language?",
     "How does quantum computing differ from classical computing?",
@@ -100,6 +96,13 @@ gen_sentence_set_random = [
     "Sunflower, igloo, thunderstorm, chess.",
 ]
 
+# Use C to alternate boundaries of the metric.
+# The lower the C, the more difficult it is to distinguish between the two sets due to regularization
+# The higher the C, the easier it is to distinguish between the two sets
+ssi = SentenceSeparabilityIndex(
+    embeddings=embeddings,
+    regression_kwargs={"C": 0.1},
+)
 gen_sentence_set = gen_sentence_set_reformulations + gen_sentence_set_alternative + gen_sentence_set_original + gen_sentence_set_redneck + gen_sentence_set_random
 # Calculate the SSI score
 ssi_scores = ssi.evaluate_scores(true_sentence_set, gen_sentence_set)
@@ -123,3 +126,31 @@ for sentence, score in gen_qual:
         tag = "random"
 
     print(f"Tag: {tag} - SSI Score: {score}\n\t{sentence}")
+
+print()
+print()
+
+cs = CosineSimilarity(embeddings=embeddings)
+gen_sentence_set = gen_sentence_set_reformulations + gen_sentence_set_alternative + gen_sentence_set_original + gen_sentence_set_redneck + gen_sentence_set_random
+# Calculate the SSI score
+cs_scores = cs.evaluate_scores(true_sentence_set, gen_sentence_set)
+
+#In scores, score 1 means that it's virtually impossible to distinguish
+
+gen_qual = zip(gen_sentence_set, list(cs_scores))
+gen_qual = sorted(gen_qual, key=lambda x: x[1], reverse=True)
+
+for sentence, score in gen_qual:
+    tag = ""
+    if sentence in gen_sentence_set_alternative:
+        tag = "alternative"
+    elif sentence in gen_sentence_set_reformulations:
+        tag = "reformulation"
+    elif sentence in gen_sentence_set_redneck:
+        tag = "redneck"
+    elif sentence in gen_sentence_set_original:
+        tag = "original"
+    elif sentence in gen_sentence_set_random:
+        tag = "random"
+
+    print(f"Tag: {tag} - Cosine Similarity Score: {score}\n\t{sentence}")
