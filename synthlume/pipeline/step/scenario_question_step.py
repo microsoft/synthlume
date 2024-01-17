@@ -24,10 +24,14 @@ class ScenarioQuestionStep(JSONStep):
 
         return True
 
-    def generate(self, inputs: dict[any]) -> dict[any]:
-        output = deepcopy(inputs)
+    def _generate(self, context: str, question: str, answer: str, **kwargs) -> dict[any]:
+        output = {
+            "context": context,
+            "question": question,
+            "answer": answer,
+        }
 
-        response = super().generate(output)
+        response = super()._generate(**output)
 
         if response is None:
             logger.warning(f"Could not generate question, returning None")

@@ -27,17 +27,21 @@ class GenerateQuestionStep(JSONStep):
 
         return True
 
-    def generate(self, inputs: dict[any]) -> dict[any]:
-        output = deepcopy(inputs)
+    def _generate(self, context: str, description: str = None, examples: str = None, **kwargs) -> dict[any]:
+        output = {
+            "context": context,
+        }
 
-        if "description" in inputs:
+        if description is not None:
             self.prompt = self.prompt_qd
-        if "examples" in inputs:
+            output["description"] = description
+        if examples is not None:
             self.prompt = self.prompt_qde
+            output["examples"] = examples
 
         logger.debug(f"Using prompt {os.path.basename(self.prompt.path)}")
 
-        response = super().generate(output)
+        response = super()._generate(**output)
 
         if response is None:
             logger.warning(f"Could not generate question, returning None")

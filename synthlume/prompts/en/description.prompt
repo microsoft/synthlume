@@ -7,6 +7,7 @@ Your task is to describe the topic of the document while adhering to the followi
     3. Restrict the description solely to the document's main field.
     4. If apparent, briefly elucidate the document's content. If not, omit this detail.
     5. Avoid mentioning the document's name or any specific details about it.
+    6. Emphasise the main area of the document in the description
 
 Document: {document}
 

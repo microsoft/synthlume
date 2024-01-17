@@ -396,3 +396,9 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# OSX Shenanigans
+.DS_Store/
+
+# Package Artifacts
+synthlume.egg-info/

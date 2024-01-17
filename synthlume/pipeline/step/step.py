@@ -2,10 +2,11 @@ from langchain_core.language_models.llms import LLM
 
 from synthlume.prompts.prompt import Prompt
 from synthlume.prompts.tags import Tag
+from synthlume.pipeline.core.runnable import Runnable
 from synthlume.logging.logging import get_logger
 logger = get_logger(__name__)
 
-class Step():
+class Step(Runnable):
     name: str = "generic"
 
     def __init__(
@@ -15,15 +16,16 @@ class Step():
     ):
         self.llm = llm
         self.prompt = prompt
+        super().__init__()
 
 
-    def generate(self, inputs: dict[any]) -> any:
+    def _generate(self, **kwargs) -> any:
         logger.debug(f"Prompt keys: {', '.join(self.prompt.keys)}")
 
         for key in self.prompt.keys:
-            assert key in inputs, f"Prompt key {key} not in inputs"
+            assert key in kwargs, f"Prompt key {key} not in inputs"
 
-        prompt_text = self.prompt.text.format(**{key: inputs[key] for key in self.prompt.keys})
+        prompt_text = self.prompt.text.format(**{key: kwargs[key] for key in self.prompt.keys})
 
         # logger.debug(f"Prompt text:\n{prompt_text}")
 
