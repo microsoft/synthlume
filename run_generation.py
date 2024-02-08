@@ -18,7 +18,7 @@ from synthlume.pipeline.step import (
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 import pandas as pd
 
-with open(f"data/sample_texts.txt", "r") as f:
+with open(f"data/sample_texts.txt", "r", encoding="utf8") as f:
     data = f.read()
 
 text_splitter = RecursiveCharacterTextSplitter(
