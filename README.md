@@ -66,7 +66,7 @@ AZURE_DEPLOYMENT_NAME=<the name of your gpt-4 deployment>
 Once your python enviroment has been activated, run:
 
 ```
-python run_generation.py
+python -m run_generation.py
 ```
 
 ### Option 2: Jupyter notebook
