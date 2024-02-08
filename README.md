@@ -6,8 +6,7 @@
 
 Before you are able to generate text, you need to prepare your enviroment.
 
-You can either use Virtual Enviorment of Conda.
-
+You can either use Virtual Enviorment or Conda.
 
 
 ## Option 1: Using Virtual Env
