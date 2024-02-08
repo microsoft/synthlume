@@ -34,7 +34,7 @@ To activate your enviroment, use one of the commands below:
 
 ### Install the Requirements
 ```
-pip install -r requirements.txt
+pip install -e .
 ```
 
 ## Option 2: Using Conda
@@ -42,10 +42,10 @@ pip install -r requirements.txt
 If you prefer to use conda, use the following commands to create a conda enviroment named sys
 
 ```bash
-conda create -n lume
+conda create -n lume python==3.10
 conda activate
 conda activate lume
-pip install -r requirements.txt
+pip install -e .
 ```
 
 ### Create your environment variables.
