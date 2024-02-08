@@ -5,3 +5,4 @@ scipy==1.11.4
 pandas==2.2.0
 openai==1.11.1
 python-dotenv==1.0.1
+sentence-transformers==2.3.1

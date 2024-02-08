@@ -405,3 +405,4 @@ synthlume.egg-info/
 
 .env
 venv_lume/
+venv/

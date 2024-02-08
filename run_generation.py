@@ -29,8 +29,7 @@ AZURE_OPENAI_KEY = os.getenv("AZURE_OPENAI_KEY")
 AZURE_DEPLOYMENT_NAME = os.getenv("AZURE_DEPLOYMENT_NAME")
 AZURE_ENDPOINT=os.getenv("AZURE_ENDPOINT")
 
-
-with open(f"data/sample_texts.txt", "r") as f:
+with open(f"data/sample_texts.txt", "r", encoding="utf8") as f:
     data = f.read()
 
 text_splitter = RecursiveCharacterTextSplitter(
