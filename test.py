@@ -18,6 +18,18 @@ from synthlume.pipeline.step import (
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 import pandas as pd
 
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+
+## constants
+AZURE_OPENAI_KEY = os.getenv("AZURE_OPENAI_KEY")
+AZURE_DEPLOYMENT_NAME = os.getenv("AZURE_DEPLOYMENT_NAME")
+AZURE_ENDPOINT=os.getenv("AZURE_ENDPOINT")
+
+
 with open(f"data/sample_texts.txt", "r") as f:
     data = f.read()
 
@@ -32,10 +44,10 @@ text_splitter = RecursiveCharacterTextSplitter(
 texts = text_splitter.create_documents([data])
 
 llm = AzureChatOpenAI(
-    openai_api_key="7fbb2519691c4720b613b409f38507fa",
-    azure_endpoint="https://synthlume-vadim.openai.azure.com/",
+    openai_api_key=AZURE_OPENAI_KEY,
+    azure_endpoint=AZURE_ENDPOINT,
     openai_api_version="2023-08-01-preview",
-    deployment_name="gpt-4",
+    deployment_name=AZURE_DEPLOYMENT_NAME,
     temperature=0.9,
 )
 

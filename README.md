@@ -1,14 +1,42 @@
-# Project
+# SynthLume
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+> This repo generates data to validate RAG (Retrieval Augmented Generation) solutions.
 
-As the maintainer of this project, please make a few updates:
+# Getting Started
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+## Option 1: using Virtual Env
+
+### Create your Virtual Environment
+```bash
+python -m venv ./venv_lume
+```
+
+### Activate your enviroment
+
+| Platform | Shell   | Command to activate virtual environment        |
+|----------|---------|------------------------------------------------|
+| POSIX    | bash/zsh| $ source ./venv_lume/bin/activate                   |
+|          | fish    | $ source ./venv_lume/bin/activate.fish              |
+|          | csh/tcsh| $ source ./venv_lume/bin/activate.csh               |
+| PowerShell|         | $ ./venv_lume/bin/Activate.ps1                 |
+| Windows  | cmd.exe | C:\> venv_lume\Scripts\activate.bat               |
+|          | PowerShell | PS C:\> venv_lume\Scripts\Activate.ps1          |
+
+### Install the Requirements
+```
+pip install -r requirements.txt
+```
+
+## Option 2: using Conda
+
+If you prefer to use conda, use the following:
+
+```bash
+conda create -n sysnthlume
+conda activate
+conda activate sysntlume
+pip install -r requirements.txt
+```
 
 ## Contributing
 
