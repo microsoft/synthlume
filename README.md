@@ -4,14 +4,24 @@
 
 # Getting Started
 
-## Option 1: using Virtual Env
+Before you are able to generate text, you need to prepare your enviroment.
+
+You can either use Virtual Enviorment of Conda.
+
+
+
+## Option 1: Using Virtual Env
 
 ### Create your Virtual Environment
+
+We suggest you create an enviroment named venv_lume:
 ```bash
 python -m venv ./venv_lume
 ```
 
 ### Activate your enviroment
+
+To activate your enviroment, use one fo the commands below:
 
 | Platform | Shell   | Command to activate virtual environment        |
 |----------|---------|------------------------------------------------|
@@ -27,16 +37,41 @@ python -m venv ./venv_lume
 pip install -r requirements.txt
 ```
 
-## Option 2: using Conda
+## Option 2: Using Conda
 
-If you prefer to use conda, use the following:
+If you prefer to use conda, use the following commands to create a conda enviroment named sys
 
 ```bash
-conda create -n sysnthlume
+conda create -n lume
 conda activate
-conda activate sysntlume
+conda activate lume
 pip install -r requirements.txt
 ```
+
+### Create your environment variables.
+
+Copy file **.env-template** onto **.env**
+
+Update the keys as shown below:
+
+```
+AZURE_OPENAI_KEY=<your openain key>
+AZURE_ENDPOINT=<your open ai endpoint>
+AZURE_DEPLOYMENT_NAME=<the name of your gpt-4 deployment>
+```
+## Running experiment
+
+### Option 1: Python Script
+
+Once your python enviroment has been activated, run:
+
+```
+python run_generation.py
+```
+
+### Option 2: Jupyter notebook
+
+run notebook [notebooks/generation.ipynb](notebooks/generation.ipynb)
 
 ## Contributing
 
