@@ -1,14 +1,77 @@
-# Project
+# SynthLume
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+> This repo generates data to validate RAG (Retrieval Augmented Generation) solutions.
 
-As the maintainer of this project, please make a few updates:
+# Getting Started
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+Before you are able to generate text, you need to prepare your enviroment.
+
+You can either use Virtual Enviorment of Conda.
+
+
+
+## Option 1: Using Virtual Env
+
+### Create your Virtual Environment
+
+We suggest you create an enviroment named venv_lume:
+```bash
+python -m venv ./venv_lume
+```
+
+### Activate your enviroment
+
+To activate your enviroment, use one of the commands below:
+
+| Platform | Shell   | Command to activate virtual environment        |
+|----------|---------|------------------------------------------------|
+| POSIX    | bash/zsh| $ source ./venv_lume/bin/activate                   |
+|          | fish    | $ source ./venv_lume/bin/activate.fish              |
+|          | csh/tcsh| $ source ./venv_lume/bin/activate.csh               |
+| PowerShell|         | $ ./venv_lume/bin/Activate.ps1                 |
+| Windows  | cmd.exe | C:\> venv_lume\Scripts\activate.bat               |
+|          | PowerShell | PS C:\> venv_lume\Scripts\Activate.ps1          |
+
+### Install the Requirements
+```
+pip install -e .
+```
+
+## Option 2: Using Conda
+
+If you prefer to use conda, use the following commands to create a conda enviroment named sys
+
+```bash
+conda create -n lume python==3.10
+conda activate
+conda activate lume
+pip install -e .
+```
+
+### Create your environment variables.
+
+Copy file **.env-template** onto **.env**
+
+Update the keys as shown below:
+
+```
+AZURE_OPENAI_KEY=<your openain key>
+AZURE_ENDPOINT=<your open ai endpoint>
+AZURE_DEPLOYMENT_NAME=<the name of your gpt-4 deployment>
+```
+## Running experiment
+
+### Option 1: Python Script
+
+Once your python enviroment has been activated, run:
+
+```
+python -m run_generation.py
+```
+
+### Option 2: Jupyter notebook
+
+run notebook [notebooks/generation.ipynb](notebooks/generation.ipynb)
 
 ## Contributing
 

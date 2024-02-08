@@ -403,5 +403,6 @@ FodyWeavers.xsd
 # Package Artifacts
 synthlume.egg-info/
 
-# Virtual environment
+.env
+venv_lume/
 venv/
