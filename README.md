@@ -21,7 +21,7 @@ python -m venv ./venv_lume
 
 ### Activate your enviroment
 
-To activate your enviroment, use one fo the commands below:
+To activate your enviroment, use one of the commands below:
 
 | Platform | Shell   | Command to activate virtual environment        |
 |----------|---------|------------------------------------------------|
