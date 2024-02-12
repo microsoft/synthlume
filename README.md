@@ -1,13 +1,30 @@
 # SynthLume
 
-> This repo generates data to validate RAG (Retrieval Augmented Generation) solutions.
+Synthlume is an advanced tool designed for generating artificial Q&A scenarios, facilitating the testing and development of Q&A systems. It streamlines the creation of realistic questions and answers, enhancing the evaluation process for these applications.
+
+## Simplified Q&A Generation
+Synthlume streamlines the creation of questions from specified contexts. Each question is crafted to be relevant, answerable, and understandable on its own, ensuring a high degree of relevance and coherence.
+
+Diverse Question Formulation
+
+The platform introduces variability in question formulation, enabling users to explore different ways of asking the same question. For instance, a query about the impact of artificial intelligence on personalized medicine could be rephrased in multiple ways to explore various aspects and implications, enriching the dataset with diverse perspectives.
+
+## Evaluation Metrics
+
+To assess the quality and realism of generated questions, Synthlume employs two primary metrics: Cosine Similarity and the Sentence Separability Index (SSI).
+
+ - Cosine Similarity: This metric measures the similarity between generated and actual questions based on their representation in a multidimensional space, offering insights into the variance and accuracy of the generated content.
+ - Sentence Separability Index (SSI): Inspired by Generative Adversarial Networks, SSI differentiates between real and synthetic questions by training a model to recognize subtle differences, allowing for refined adjustment based on project needs.
+
+## Enhancing Multiple Choice Questions
+
+Synthlume excels in creating multiple-choice questions, a critical component in evaluating Q&A systems. This feature tests both the system's ability to retrieve relevant information and its capacity to discern the correct answer from plausible alternatives. By generating both correct and intentionally incorrect options, Synthlume provides a comprehensive framework for robust system evaluation.
 
 # Getting Started
 
 Before you are able to generate text, you need to prepare your enviroment.
 
 You can either use Virtual Enviorment of Conda.
-
 
 
 ## Option 1: Using Virtual Env
