@@ -59,3 +59,12 @@ class QuestionStyleCompleteSentenseStep(TextGenerationStep):
 
     def _generate(self, question: str, **kwargs) -> dict:
         return super()._generate(question=question)
+    
+class QuestionNewStyleStep(TextGenerationStep):
+    name: str = "new_style"
+
+    output_key: str = "question"
+    prompt_name: str = "question_new_style"
+
+    def _generate(self, question: str, new_style: str, **kwargs) -> dict:
+        return super()._generate(question=question, new_style=new_style)
