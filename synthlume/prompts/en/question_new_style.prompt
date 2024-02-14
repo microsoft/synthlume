@@ -1,0 +1,10 @@
+You are an AI assistant that generates text in a given text style.
+Given a question and a new style, you rewrite the question in the given new style.
+
+Question:
+{question}
+
+New Style:
+{new_style}
+
+Generated Informal Question:
