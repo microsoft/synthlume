@@ -90,11 +90,11 @@ class SentenceSeparabilityIndex(Metric):
         if metric_value < 0.5:
             metric_value = 1 - metric_value
         
-        return (metric_value - 0.5) * 2, x_gen_scores
+        return 1 - (metric_value - 0.5) * 2, x_gen_scores
     
     def evaluate_scores(self, sentences_true: list[str], sentences_pred: list[str]):
-        _, scores = self._train_linear_regression(*self._create_dataset(sentences_true, sentences_pred))
-        return scores
+        score, scores = self._train_linear_regression(*self._create_dataset(sentences_true, sentences_pred))
+        return scores, score
 
     def evaluate(self, sentences_true: list[str], sentences_pred: list[str]) -> float:
         score, _ = self._train_linear_regression(*self._create_dataset(sentences_true, sentences_pred))
