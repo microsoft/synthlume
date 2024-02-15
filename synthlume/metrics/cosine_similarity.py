@@ -40,8 +40,8 @@ class CosineSimilarity(Metric):
             score, _ = self._compare_against_y(sentence, y_true)
             scores.append(score)
 
-        return scores
+        return scores, np.mean(scores)
 
     def evaluate(self, sentences_true: list[str], sentences_pred: list[str]) -> float:
-        scores = self.evaluate_scores(sentences_true, sentences_pred)
-        return np.mean(scores)
+        _, score = self.evaluate_scores(sentences_true, sentences_pred)
+        return score
