@@ -8,3 +8,4 @@ from synthlume.pipeline.step.text_generation_step import (
     QuestionStyleCompleteSentenseStep
 )
 from synthlume.pipeline.step.multichoice_question import MultipleChoiceQuestionStep
+from synthlume.pipeline.step.generate_multicontext_question import GenerateMulticontextQuestionStep

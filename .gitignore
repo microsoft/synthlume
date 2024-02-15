@@ -406,3 +406,6 @@ synthlume.egg-info/
 .env
 venv_lume/
 venv/
+
+# fine-tuned models
+models/
