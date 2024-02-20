@@ -408,4 +408,4 @@ venv_lume/
 venv/
 
 # fine-tuned models
-models/
+finetuned_models/
