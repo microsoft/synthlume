@@ -75,7 +75,8 @@ class Runnable(ABC):
         run_args = kwargs
         while current is not None:
             result = current._generate(**run_args)
-            run_args.update(result)
+            if result is not None:
+                run_args.update(result)
 
             current = current.next
         

@@ -37,6 +37,7 @@ class Step(Runnable):
         if Tag.ChainOfThought.value in self.prompt.tags:
             try:
                 cot, response = response.split("-------")
+                logger.info(f"CoT:\n{cot}")
             except ValueError:
                 logger.debug(f"Could not split response into chain of thought and response, returning full response")
                 cot = ""

@@ -9,7 +9,7 @@ logger = get_logger(__name__)
 
 class MultipleChoiceQuestionStep(JSONStep):
     name: str = "multichoice_question"
-    response_keys: list[str] = ["wrong_answer_1", "wrong_answer_2", "wrong_answer_3"]
+    response_keys: list[str] = ["wrong_answer_1", "wrong_answer_2", "wrong_answer_3", "correct_answer", "question"]
 
     def __init__(self, llm: LLM, language: str, retries: int = 3):
         self.prompt = Prompt.from_data(language, "multichoice_question")

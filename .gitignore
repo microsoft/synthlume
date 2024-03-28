@@ -408,4 +408,8 @@ venv_lume/
 venv/
 
 # fine-tuned models
+models/
+
+data/
+.DS_Store/
 finetuned_models/
