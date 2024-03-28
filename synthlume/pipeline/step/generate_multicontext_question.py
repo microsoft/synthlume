@@ -5,6 +5,7 @@ from langchain_core.language_models.llms import LLM
 from langchain_core.embeddings import Embeddings
 from langchain.vectorstores.faiss import FAISS
 from langchain_core.documents import Document
+from langchain_community.vectorstores.utils import DistanceStrategy
 
 from synthlume.pipeline.step.json_step import JSONStep
 from synthlume.prompts.prompt import Prompt
@@ -31,7 +32,11 @@ class GenerateMulticontextQuestionStep(JSONStep):
 
         super().__init__(llm, self.prompt_q, retries=retries)
 
-        self.vectorstore = FAISS.from_documents(documents, embeddings)
+        if True:
+            self.vectorstore = FAISS.from_documents(documents, embeddings, distance_strategy=DistanceStrategy.COSINE)
+            self.vectorstore.save_local("faiss_index")
+        else:
+            self.vectorstore = FAISS.load_local("faiss_index", embeddings, distance_strategy=DistanceStrategy.COSINE, allow_dangerous_deserialization=True)
         self.min_distance = min_distance
         self.max_distance = max_distance
         self.n_documents = n_documents
@@ -49,6 +54,8 @@ class GenerateMulticontextQuestionStep(JSONStep):
     def _try_get_contexts(self, query: str, n_documents, exclude_document: str = None) -> list[str]:
         embedding_vector = self.vectorstore._embed_query(query)
         most_similar = self.vectorstore.similarity_search_with_score_by_vector(embedding=embedding_vector, k=n_documents)
+
+        most_similar = [(doc, 1 - score) for doc, score in most_similar]
 
         has_lower_limit = any([score < self.min_distance for _, score in most_similar])
         has_upper_limit = any([score > self.max_distance for _, score in most_similar])
@@ -95,5 +102,6 @@ class GenerateMulticontextQuestionStep(JSONStep):
         
         output["question"] = response["question"]
         output["answer"] = response["answer"]
+        output["raw_contexts"] = contexts
 
         return output

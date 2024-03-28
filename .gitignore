@@ -409,3 +409,6 @@ venv/
 
 # fine-tuned models
 models/
+
+data/
+.DS_Store/

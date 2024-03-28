@@ -1,41 +1,169 @@
 TAGS: #CoT
 ############
-You are given a question, an answer and a piece of context that contains all the information required for an answer.
-Your job is to generate alternative options for an answer, as if it was an exam question.
-For example:
-Question: What is the height of Leaning Tower of Pisa on the high side?
-Answer: The height of the tower is 56.67 meters on the high side.
-Context: The height of the tower is 55.86 metres (183 feet 3 inches) from the ground on the low side and 56.67 m (185 ft 11 in) on the high side. The width of the walls at the base is 2.44 m (8 ft 0 in). Its weight is estimated at 14,500 tonnes (16,000 short tons)
+Your task is to design a multiple-choice question aimed at evaluating understanding and retention of specific factual information. This question should be structured to include one correct answer and three carefully crafted incorrect answers that are plausible but subtly wrong. These alternatives should be developed to challenge the respondent's knowledge, encouraging critical thinking and a deeper comprehension of the subject matter. The question and answers must be based on a provided context, which should contain all the necessary information to discern the correct answer and construct the plausible incorrect options. This context needs to be detailed and factual, encompassing specific data points, measurements, or historical facts relevant to the question. When creating the incorrect answers, it is crucial to employ subtlety and creativity to make them appear convincing to someone without prior knowledge of the correct answer. These alternatives should be designed to test not just the recall of facts but also the understanding of the subject matter's nuances. The incorrect options should be close enough to the correct answer to be plausible but contain minor inaccuracies or misconceptions that distinguish them from the correct option. The length of each answer option should be comparable to maintain balance and fairness in the question. However, minor variations in length are permissible as long as they do not undermine the integrity of the question or make any option blatantly correct or incorrect at first glance. In crafting your question and answers, focus on clarity and precision to ensure that the question is understandable and the context provided is sufficient for someone to engage with the question meaningfully. The goal is to create a question that serves as a valuable educational tool, enhancing the learning experience by promoting critical analysis and deeper engagement with the subject matter.
 
-Versions:
-{{
-    "wrong_answer_1": "The height of the tower is 55.86 meters on the high side.",
-    "wrong_answer_2": "The height of the tower is 185.11 meters on the high side.",
-    "wrong_answer_3": "The height of the tower is impossible to define due to the fact that it's leaning towards one side"
-}}
+You are allowed to modify the initial question, if necessary.
 
-YOU SHOULD NOT CHANGE NIETHER THE INITIAL CORRECT ANSWER NOR THE QUESTION.
-Think step-by-step. In your thinking process you need to justify why proposed options look reasonable.
-For example, in the sample provided, wrong_answer_1 is refering to a height on the low side, and looks reasonable.
-In the wrong_answer_2, it uses feed instead of meters.
-And the wrong_answer_3 referring looks like a tricky response.
-If respondent does not know the answer for sure, they can be tricked by either of these options.
-In you step-by-step thinking, provide the underlying logic and try to make it as tricky as possible.
+Correct answer generation rules:
+1. The reformulated answer should capture the main characteristics of the original answer.
+2. If possible, the correct answer should refer to specific facts in the original answer, such as numbers or facts.
+3. The correct answer must not be deducible from general logic, meaning that knowledge of the facts provided in the original answer is necessary to formulate a new correct answer.
 
-YOU NEED TO CREATE ONLY 3 WRONG ANSWER OPTIONS, NO MORE NO LESS.
-WRONG ANSWERS SHOULD BE COMPARABLE LENGTH TO THE ORIGINAL ANSWER, IT IS POSSIBLE THAT SOME OF THEM ARE SIGNIFICANTLY SHORTER OR LONGER, BUT NOT ALL OF THEM.
-ALL OPTIONS SHOULD LOOK PLAUSABLE WITHOUT PROVIDED CONTEXT, ASSUMING THE RESPONDENT HAS NO PRIOR KNOWLEDGE ABOUT THE TOPIC.
+Wrong answer generation rules:
+1. The wrong answer should be comparable in complexity to the correct answer.
+2. The wrong answer must be indistinguishable from the correct answer using only general knowledge.
+3. The wrong answer should rely on facts from the original answer but can twist them or intentionally rely on the wrong interpretation of these facts.
+4. The wrong answer should rely on the provided context, using random facts and numbers from it. It is allowed to twist them or intentionally lie in the wrong answer.
+5. Wrong answers should differ from one another.
 
+Wrong answer possible categories:
+1. Plausible Alternatives: Incorrect but believable answers that seem right at first glance. They're designed to test a deep understanding of the subject matter.
+2. Common Misconceptions: Answers based on frequent misunderstandings or common mistakes in the subject area. These help identify and correct widespread errors in thinking.
+3. Related Facts: Distractors that are true statements but don't answer the question. They require the test-taker to distinguish between relevant and irrelevant information.
+4. Out-of-Scope Answers: Answers that are correct in a different context but not in the specific context of the question. This tests the ability to apply knowledge appropriately.
+5. Overgeneralizations: Answers that might be true in a broad sense but fail to account for the specifics of the question. They challenge the ability to pay attention to detail.
+6. Semantic Traps: These use similar wording or concepts as the correct answer but are technically incorrect. They test reading comprehension and attention to detail.
+7. Numerical Distractors: For quantitative questions, these might be answers derived from common calculation mistakes or misinterpretation of the question's data.
+8. Exaggerations or Understatements: Answers that take a correct concept but distort it by making it more extreme or more subdued than it should be.
+9. Opposites or Negations: Taking the correct answer and presenting its opposite, which can sometimes catch out those who misread or skim the question.
+10. Partial Truths: Answers that contain part of the correct response but miss critical elements or combine aspects incorrectly.
+
+Using a mix of these types can make multiple-choice questions more challenging and educational, testing not just recall but understanding, application, and critical thinking.
+
+Expected Response:
+- Begin with reasoning steps, highlighting important things and logic behind potential correct and wrong answers.
+- Formulate a potential correct answer.
+- Validate the correct answer against the "Correct answer generation rules."
+- If the generated answer does not comply with one or more rules, propose a modification of the answer and go back to the previous step.
+- Once the correct answer is created, formulate wrong answer 1.
+- Ensure that wrong answer 1 is one or a combination of categories from the "Wrong answer possible categories."
+- Validate wrong answer 1 against the "Wrong answer generation rules."
+- If the generated answer does not comply with one or more rules, propose a modification of the answer and go back to the previous step.
+- Once wrong answer 1 is created, formulate wrong answer 2.
+- Ensure that wrong answer 2 is one or a combination of categories from "Wrong answer possible categories."
+- Validate wrong answer 2 against "Wrong answer generation rules."
+- If the generated answer does not comply with one or more rules, propose a modification of the answer and go back to the previous step.
+- Once wrong answer 2 is created, formulate wrong answer 3.
+- Ensure that wrong answer 3 is one or a combination of categories from "Wrong answer possible categories."
+- Validate wrong answer 3 against "Wrong answer generation rules."
+- If the generated answer does not comply with one or more rules, propose a modification of the answer and go back to the previous step.
+
+<Example 1>:
+Context: In the fiscal year ending 2023, AmaraTech, a leading semiconductor company, reported a significant shift in its revenue streams, attributed to the successful launch of its next-generation microprocessors. These processors, known as the QuantumX series, were designed to offer unprecedented computational speed and energy efficiency, targeting both consumer electronics and enterprise-scale data centers. Despite a highly competitive market, AmaraTech managed to capture a 15% market share within the first quarter post-launch, primarily due to its innovative use of nano-layered graphene in the chip architecture. This breakthrough material significantly reduced overheating issues, a common problem in high-performance computing chips. However, it's important to note that the QuantumX series also faced initial manufacturing challenges, leading to a temporary supply shortage and increased production costs, which were approximately 20% higher than those of the previous generation chips, the NanoZ series.
+Question: Based on the fiscal year 2023 report for AmaraTech, what was the primary factor contributing to the significant increase in the company's revenue streams?
+Answer: The launch of the QuantumX series microprocessors, which offered unprecedented computational speed and energy efficiency, significantly contributed to AmaraTech's increased revenue streams by capturing a 15% market share within the first quarter post-launch.
+
+Response:
+Question Reformulation:
+Considering AmaraTech's fiscal year 2023 report, which factor was most crucial in driving the company's revenue increase?
+
+Correct Response Reformulation:
+The QuantumX series launch, achieving a 15% market share in its first quarter, was pivotal for AmaraTech's revenue growth.
+
+Correct Response Verification:
+1. The reformulated answer captures the main characteristics of the original context, focusing on the QuantumX series' impact on AmaraTech's revenue.
+2. It refers to specific facts from the original context, such as the 15% market share gained post-launch.
+3. Knowledge of the QuantumX series' launch and its market impact is necessary to select this as the correct answer, making it non-deducible from general logic.
+
+Wrong Answer 1:
+- Category: Numerical Distractors
+- Generated Answer: The reduction in production costs due to the innovative use of nano-layered graphene was the key driver behind AmaraTech's revenue growth.
+- Verification:
+    1. Comparable in complexity to the correct answer.
+    2. Appears plausible without detailed context knowledge.
+    3. Utilizes context facts but misrepresents the impact on costs.
+    4. References the context, twisting facts about cost impacts.
+    5. Distinct from the correct and other wrong answers.
+
+Wrong Answer 2:
+- Category: Common Misconceptions
+- Generated Answer: The continued success of the previous generation NanoZ series chips was the primary contributor to AmaraTech's revenue increase.
+- Verification:
+    1. Matches the correct answer in complexity.
+    2. Seems plausible without specific context knowledge.
+    3. Leverages context but misdirects focus to the NanoZ series.
+    4. Relies on provided context regarding previous product performance.
+    5. Offers a clear alternative to the correct answer and other wrong answers.
+
+Wrong Answer 3:
+- Category: Exaggerations
+- Generated Answer: AmaraTech's decision to increase QuantumX series production costs by 20% led to a substantial revenue growth due to enhanced product quality.
+- Verification:
+    1. Similar in complexity to the correct answer.
+    2. Could be seen as plausible without exact context knowledge.
+    3. Utilizes context but exaggerates the impact of cost increase on revenue.
+    4. References correct context but distorts the relationship between production costs and revenue.
+    5. Distinct from other answers, ensuring a range of plausible alternatives.
+
+-------
+{{"question": "Considering AmaraTech's fiscal year 2023 report, which factor was most crucial in driving the company's revenue increase?", "correct_answer": "The QuantumX series' launch and its 15% market share gain in the first quarter significantly influenced AmaraTech's revenue upsurge.", "wrong_answer_1": "The reduction in production costs due to nano-layered graphene was key to AmaraTech's revenue growth.", "wrong_answer_2": "The sustained performance of the NanoZ series was the main driver of AmaraTech's revenue increase.", "wrong_answer_3": "A 20% increase in QuantumX production costs led to significant revenue growth due to improved quality."}}
+</Example 1>
+
+<Example 2>:
+Context: In 2023, BioHeal Inc., a biotechnology firm specializing in regenerative medicine, achieved a breakthrough with its novel tissue regeneration therapy, RegenX. This therapy, designed to enhance the body's natural healing processes, showed a 40% improvement in recovery times for soft tissue injuries in clinical trials. BioHeal's strategic partnerships with major hospitals and clinics significantly expanded the therapy's availability, contributing to a notable 25% increase in the company's annual revenue. However, the therapy's high production costs, due to the complexity of the biocompatible materials used, posed financial challenges, leading to a 10% increase in the overall expenditure for research and development.
+Question: What was the primary factor behind BioHeal Inc.'s revenue growth in 2023?
+Answer: The successful launch and widespread adoption of RegenX therapy, leading to a 25% increase in annual revenue, was the primary factor behind BioHeal Inc.'s revenue growth in 2023.
+
+Response:
+Question Reformulation:
+What primarily fueled BioHeal Inc.'s revenue enhancement in 2023?
+
+Correct Response Reformulation:
+The introduction and broad implementation of RegenX therapy, which accounted for a 25% revenue boost, was crucial for BioHeal Inc.'s financial upturn.
+
+Correct Response Verification:
+1. The reformulated answer succinctly encapsulates the original context's essence by highlighting the RegenX therapy's role.
+2. It directly references specific context-based data, such as the 25% revenue increase.
+3. The necessity of context knowledge for this answer reaffirms its compliance with rule 3, as it can't be inferred through general reasoning alone.
+
+Wrong Answer 1:
+- Category: Common Misconceptions
+- Generated Answer: The decrease in production costs for RegenX therapy was the leading factor in BioHeal's revenue surge.
+- Verification:
+    1. The complexity is aligned with the correct answer.
+    2. Without the context, it seems plausible.
+    3. It twists the context facts, suggesting a cost decrease instead of the actual increase.
+    4. The answer uses the provided context but introduces a misconception regarding cost management.
+    5. It's distinct from the correct answer.
+
+Wrong Answer 2:
+- Category: Related Facts
+- Generated Answer: The 10% increase in R&D expenditure was the main driver of BioHeal's revenue increase.
+- Verification:
+    1. Matches in complexity.
+    2. Rule Violation: This answer might be distinguishable from the correct answer using general knowledge since increased R&D costs typically don't lead directly to revenue growth, breaking the rule.
+
+Correction for Wrong Answer 2:
+- New Category: Plausible Alternatives
+- New Generated Answer: The strategic partnerships with hospitals and clinics, facilitating RegenX therapy's access, were pivotal for BioHeal's revenue increase.
+
+- Verification:
+    1. The corrected answer is comparable in complexity to the correct answer.
+    2. It remains plausible without detailed knowledge of the context, adhering to the rule.
+    3. The answer utilizes specific context information regarding strategic partnerships.
+    4. It relies on the context provided, aligning with the details of the partnerships' impact on therapy distribution.
+    5. This answer is distinct from the correct and other wrong answers, providing a range of plausible alternatives.
+
+Wrong Answer 3:
+- Category: Exaggerations
+- Generated Answer: BioHeal's financial turnaround was solely due to cutting-edge biocompatible materials used in RegenX, reducing production costs dramatically.
+- Verification:
+    1. Comparable in complexity to the correct and other wrong answers.
+    2. Seems plausible without context-specific knowledge.
+    3. It introduces an exaggeration by claiming dramatic cost reductions, contrary to the context.
+    4. The answer is based on the context but distorts the factual information regarding cost management.
+    5. It is distinct from the correct answer and the other wrong answers, ensuring a diverse set of options.
+-------
+{{"question": "What primarily fueled BioHeal Inc.'s revenue enhancement in 2023?", "correct_answer": "The introduction and broad implementation of RegenX therapy, which accounted for a 25% revenue boost, was crucial for BioHeal Inc.'s financial upturn.", "wrong_answer_1": "The decrease in production costs for RegenX therapy was the leading factor in BioHeal's revenue surge.", "wrong_answer_2": "The strategic partnerships with hospitals and clinics, facilitating RegenX therapy's access, were pivotal for BioHeal's revenue increase.", "wrong_answer_3": "BioHeal's financial turnaround was solely due to cutting-edge biocompatible materials used in RegenX, reducing production costs dramatically."}}
+</Example 2>
+
+Rules:
+Use ------- to separate thoguhts from the JSON
+Make sure that length of the correct answer and wrong answers are not very different.
+Here is the input:
+
+Context: {context}
 Question: {question}
 Answer: {answer}
-Context: {context}
-
-USE ------- TO SEPARATE THINKING PROCESS FROM THE JSON
-
-You should respond with a following structure:
-
-step-by-step thinking process
--------
-{{"wrong_answer_1": wrong answer, "wrong_answer_2": wrong answer, "wrong_answer_3": wrong answer}}
 
 Response:
