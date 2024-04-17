@@ -26,9 +26,6 @@ class GenerateMulticontextQuestionStep(JSONStep):
         self.prompt_qd = Prompt.from_data(language, "question_multicontext_generate_d")
 
         super().__init__(llm, self.prompt_q, retries=retries)
-        self.min_distance = min_distance
-        self.max_distance = max_distance
-        self.n_documents = n_documents
 
     def validate(self, json_response: any) -> bool:
         if not isinstance(json_response, dict):
