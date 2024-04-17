@@ -3,7 +3,7 @@ After reformulation you should not lose context or change meaning.
 The question should look natural for humans.
 Make question sounds less like a part of an exam and more like a part of a normal talk between people.
 Make the question shorter and simplier of possible.
-
+{custom_instruction}
 Question: {question}
 
 Response:

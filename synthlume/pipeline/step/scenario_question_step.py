@@ -24,11 +24,12 @@ class ScenarioQuestionStep(JSONStep):
 
         return True
 
-    def _generate(self, context: str, question: str, answer: str, **kwargs) -> dict[any]:
+    def _generate(self, context: str, question: str, answer: str, custom_instruction:str="\n", **kwargs) -> dict[any]:
         output = {
             "context": context,
             "question": question,
             "answer": answer,
+            "custom_instruction": custom_instruction
         }
 
         response = super()._generate(**output)

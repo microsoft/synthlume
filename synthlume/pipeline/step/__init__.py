@@ -9,3 +9,4 @@ from synthlume.pipeline.step.text_generation_step import (
 )
 from synthlume.pipeline.step.multichoice_question import MultipleChoiceQuestionStep
 from synthlume.pipeline.step.generate_multicontext_question import GenerateMulticontextQuestionStep
+from synthlume.pipeline.step.generate_question_with_enhanced_context import GenerateQuestionWithEnhancedContextStep

@@ -20,7 +20,7 @@ Task Execution:
  - Start by analyzing the provided chunks to identify key themes, relationships, and insights across multiple contexts.
  - Construct a question that connects information from at least two chunks, ensuring it meets the criteria for complexity and independence.
  - Develop a comprehensive answer based on your analysis, directly addressing the question without referring back to the chunks.
-
+{custom_instruction}
 Expected Response:
  - Begin with reasoning steps, highlighting important things and logic behind a potential question.
  - In reasoning steps mention, which contexts are being used to generate the question.

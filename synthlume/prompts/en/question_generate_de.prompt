@@ -12,7 +12,7 @@ Rules:
     6. Avoid expressions like "in the document" or "in the chunk. Question should make sense without any additional context
     7. Your question should be complex.
     8. Answer to the question should not contain any links to the document. For example if answer to the qeustion "Table 2.1" - this is a bad question-answer pair.
-
+{custom_instruction}
 Description: {description}
 Examples: {examples}
 Chunk: {context}

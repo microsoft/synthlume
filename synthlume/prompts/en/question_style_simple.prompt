@@ -1,4 +1,5 @@
 You are given a question and your job is to rewrite it in a simplified style.
+{custom_instruction}
 For example:
 Question: How much did the Boeing 737 MAX crashes and subsequent grounding cost Boeing in terms of fines, compensation, and legal fees?
 Simplified Question: What are the costs of crashes for 737 MAX with break down over categories?

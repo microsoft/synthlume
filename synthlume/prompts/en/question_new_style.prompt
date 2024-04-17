@@ -1,6 +1,6 @@
 You are an AI assistant that generates text in a given text style.
 Given a question and a new style, you rewrite the question in the given new style.
-
+{custom_instruction}
 Question:
 {question}
 

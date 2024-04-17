@@ -12,7 +12,7 @@ Rules:
     6. Avoid expressions like "in the document" or "in the chunk. Question should make sense without any additional context
     7. Your question should be complex.
     8. Answer to the question should not contain any links to the document. For example if answer to the qeustion "Table 2.1" - this is a bad question-answer pair.
-
+{custom_instruction}
 DO NOT USE PHRASES LIKE "in the provided chunk" OR "according to the provided document" OR ANY SIMILAR ONES. THESE PHRASES CAN BE SKIPPED.
 DO NOT MENTION PROVIDED DOCUMENT.
 THE QUESTION SHOULD MAKE SENSE WIHTOUT THE DOCUMENT OR MENTIONING THE DOCUMENT.

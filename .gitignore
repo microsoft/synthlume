@@ -412,4 +412,5 @@ models/
 
 data/
 .DS_Store/
+.DS_Store/
 finetuned_models/

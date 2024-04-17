@@ -10,7 +10,7 @@ Rules:
     4. Avoid referring to this prompt. The question should not have phrases like "in the provided chunk"
     5. Your question should be complex.
     6. Answer to the question should not contain any links to the document. For example if answer to the qeustion "Table 2.1" - this is a bad question-answer pair.
-
+{custom_instruction}
 Chunk: {context}
 
 DO NOT USE PHRASES LIKE "in the provided chunk" OR "according to the provided document" OR ANY SIMILAR ONES. THESE PHRASES CAN BE SKIPPED.

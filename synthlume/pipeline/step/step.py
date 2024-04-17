@@ -24,6 +24,13 @@ class Step(Runnable):
 
         for key in self.prompt.keys:
             assert key in kwargs, f"Prompt key {key} not in inputs"
+        if "custom_instruction" not in self.prompt.keys:
+            kwargs["custom_instruction"] = "\n"
+        else:
+            kwargs["custom_instruction"] = (
+                f"\nThis is the most important instruction for you. Check that your response is with compliance with it"
+                f"\n{kwargs['custom_instruction']}\n"
+            )
 
         prompt_text = self.prompt.text.format(**{key: kwargs[key] for key in self.prompt.keys})
 

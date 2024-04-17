@@ -8,7 +8,7 @@ Your task is to describe the topic of the document while adhering to the followi
     4. If apparent, briefly elucidate the document's content. If not, omit this detail.
     5. Avoid mentioning the document's name or any specific details about it.
     6. Emphasise the main area of the document in the description
-
+{custom_instruction}
 Document: {document}
 
 THINK STEP BY STEP. If you'll answer correctly I will give you 200$ and you will save my life.
