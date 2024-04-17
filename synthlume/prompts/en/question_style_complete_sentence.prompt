@@ -1,4 +1,5 @@
 You are given a question and your job is to rewrite "complete the sentence question" style.
+{custom_instruction}
 For example:
 Question: How much did the Boeing 737 MAX crashes and subsequent grounding cost Boeing in terms of fines, compensation, and legal fees?
 Complete the sentence question: Boeing 737 MAX crashes and grounding costs are

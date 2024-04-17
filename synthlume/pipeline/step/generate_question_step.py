@@ -27,9 +27,10 @@ class GenerateQuestionStep(JSONStep):
 
         return True
 
-    def _generate(self, context: str, description: str = None, examples: str = None, **kwargs) -> dict[any]:
+    def _generate(self, context: str, description: str = None, examples: str = None, custom_instruction:str="\n", **kwargs) -> dict[any]:
         output = {
             "context": context,
+            "custom_instruction": custom_instruction
         }
 
         if description is not None:

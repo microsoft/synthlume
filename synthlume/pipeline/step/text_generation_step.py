@@ -30,8 +30,8 @@ class HumanifyQuestionStep(TextGenerationStep):
     output_key: str = "question"
     prompt_name: str = "question_humanify"
 
-    def _generate(self, question: str, **kwargs) -> dict:
-        return super()._generate(question=question)
+    def _generate(self, question: str, custom_instruction:str="\n", **kwargs) -> dict:
+        return super()._generate(question=question, custom_instruction=custom_instruction)
 
 class DescriptionStep(TextGenerationStep):
     name: str = "description"
@@ -39,8 +39,8 @@ class DescriptionStep(TextGenerationStep):
     output_key: str = "description"
     prompt_name: str = "description"
 
-    def _generate(self, document: str, **kwargs) -> dict:
-        return super()._generate(document=document)
+    def _generate(self, document: str, custom_instruction:str="\n", **kwargs) -> dict:
+        return super()._generate(document=document, custom_instruction=custom_instruction)
 
 class QuestionStyleSimpleStep(TextGenerationStep):
     name: str = "style_simple"
@@ -48,8 +48,8 @@ class QuestionStyleSimpleStep(TextGenerationStep):
     output_key: str = "question"
     prompt_name: str = "question_style_simple"
 
-    def _generate(self, question: str, **kwargs) -> dict:
-        return super()._generate(question=question)
+    def _generate(self, question: str, custom_instruction:str="\n", **kwargs) -> dict:
+        return super()._generate(question=question, custom_instruction=custom_instruction)
 
 class QuestionStyleCompleteSentenseStep(TextGenerationStep):
     name: str = "style_complete_sentence"
@@ -57,8 +57,8 @@ class QuestionStyleCompleteSentenseStep(TextGenerationStep):
     output_key: str = "question"
     prompt_name: str = "question_style_complete_sentence"
 
-    def _generate(self, question: str, **kwargs) -> dict:
-        return super()._generate(question=question)
+    def _generate(self, question: str, custom_instruction:str="\n", **kwargs) -> dict:
+        return super()._generate(question=question, custom_instruction=custom_instruction)
     
 class QuestionNewStyleStep(TextGenerationStep):
     name: str = "new_style"
@@ -66,5 +66,5 @@ class QuestionNewStyleStep(TextGenerationStep):
     output_key: str = "question"
     prompt_name: str = "question_new_style"
 
-    def _generate(self, question: str, new_style: str, **kwargs) -> dict:
-        return super()._generate(question=question, new_style=new_style)
+    def _generate(self, question: str, new_style: str, custom_instruction:str="\n", **kwargs) -> dict:
+        return super()._generate(question=question, new_style=new_style, custom_instruction=custom_instruction)

@@ -47,7 +47,7 @@ Expected Response:
 - Ensure that wrong answer 3 is one or a combination of categories from "Wrong answer possible categories."
 - Validate wrong answer 3 against "Wrong answer generation rules."
 - If the generated answer does not comply with one or more rules, propose a modification of the answer and go back to the previous step.
-
+{custom_instruction}
 <Example 1>:
 Context: In the fiscal year ending 2023, AmaraTech, a leading semiconductor company, reported a significant shift in its revenue streams, attributed to the successful launch of its next-generation microprocessors. These processors, known as the QuantumX series, were designed to offer unprecedented computational speed and energy efficiency, targeting both consumer electronics and enterprise-scale data centers. Despite a highly competitive market, AmaraTech managed to capture a 15% market share within the first quarter post-launch, primarily due to its innovative use of nano-layered graphene in the chip architecture. This breakthrough material significantly reduced overheating issues, a common problem in high-performance computing chips. However, it's important to note that the QuantumX series also faced initial manufacturing challenges, leading to a temporary supply shortage and increased production costs, which were approximately 20% higher than those of the previous generation chips, the NanoZ series.
 Question: Based on the fiscal year 2023 report for AmaraTech, what was the primary factor contributing to the significant increase in the company's revenue streams?

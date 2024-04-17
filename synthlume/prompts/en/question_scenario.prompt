@@ -3,7 +3,7 @@ TAGS: #CoT
 
 You are give a question and an answer and a context. Your task is to reformulate a question as a "hypothetical scenario question".
 You can modify an answer to match the question, BUT THE ANSWER STILL SHOULD BE FULLY DEFINED IN THE CONTEXT.
-
+{custom_instruction}
 An example of input:
 Question: How does artificial intelligence impact the field of personalized medicine?
 Answer: AI in personalized medicine enables more accurate disease prediction and treatment customization, improving patient outcomes and healthcare efficiency.

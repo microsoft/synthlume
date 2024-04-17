@@ -18,7 +18,7 @@ Task Execution:
  - Start by analyzing the provided chunks to identify key themes, relationships, and insights across multiple contexts.
  - Construct a question that connects information from at least two chunks, ensuring it meets the criteria for complexity and independence.
  - Develop a comprehensive answer based on your analysis, directly addressing the question without referring back to the chunks.
-
+{custom_instruction}
 Expected Response:
  - Begin with a brief explanation of your analytical process.
  - Provide your question-and-answer pair, clearly separated from the thought process.
