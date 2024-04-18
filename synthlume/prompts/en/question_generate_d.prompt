@@ -23,12 +23,12 @@ Chunk: {context}
 
 THINK STEP BY STEP. If you'll answer correctly I will give you 200$ and you will save my life.
 In your logic reasoning, make sure that your question satisfies all the rules you've been given.
-USE ------- TO SEPARATE THINKING PROCESS FROM THE JSON
+USE ##RESPONSE## TO SEPARATE THINKING PROCESS FROM THE JSON
 
 You should respond with a following structure:
 
 step-by-step thinking process
--------
+##RESPONSE##
 {{"question": generated question, "anwer": generated answer}}
 
 Response:

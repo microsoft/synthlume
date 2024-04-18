@@ -12,7 +12,7 @@ from synthlume.pipeline.step import (
     QuestionStyleSimpleStep,
     QuestionStyleCompleteSentenseStep,
     MultipleChoiceQuestionStep,
-    GenerateMulticontextQuestionStep
+    GenerateQuestionWithEnhancedContextStep
 )
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.document_loaders import PyPDFLoader
@@ -150,7 +150,7 @@ llm = AzureChatOpenAI(
 )
 
 
-multicontext_generation_step = GenerateMulticontextQuestionStep(
+multicontext_generation_step = GenerateQuestionWithEnhancedContextStep(
     llm=llm,
     language="en",
     documents=all_documents,

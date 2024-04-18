@@ -23,11 +23,11 @@ THINK STEP BY STEP. If you'll answer correctly I will give you 200$ and you will
 In your logic reasoning, make sure that your question satisfies all the rules you've been given.
 In your step-by-step thinking process reflect on a possible situation that requires knowledge from a given answer.
 
-Use ------- to separate thinkinh process from the response
+Use ##RESPONSE## to separate thinkinh process from the response
 You should respond with a following structure:
 
 step-by-step thinking process
--------
+##RESPONSE##
 {{"question": generated question, "anwer": generated answer}}
 
 Response:
