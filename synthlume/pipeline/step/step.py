@@ -34,16 +34,18 @@ class Step(Runnable):
 
         prompt_text = self.prompt.text.format(**{key: kwargs[key] for key in self.prompt.keys})
 
-        # logger.debug(f"Prompt text:\n{prompt_text}")
+        logger.info(f"Prompt text:\n{prompt_text}")
 
         response = self.llm.invoke(prompt_text)
+
+        logger.info(f"Response:\n{response}")
 
         if hasattr(response, "content"):
             response = response.content
 
         if Tag.ChainOfThought.value in self.prompt.tags:
             try:
-                cot, response = response.split("-------")
+                cot, response = response.split("##RESPONSE##")
                 logger.info(f"CoT:\n{cot}")
             except ValueError:
                 logger.debug(f"Could not split response into chain of thought and response, returning full response")

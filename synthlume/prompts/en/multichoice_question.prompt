@@ -95,7 +95,7 @@ Wrong Answer 3:
     4. References correct context but distorts the relationship between production costs and revenue.
     5. Distinct from other answers, ensuring a range of plausible alternatives.
 
--------
+##RESPONSE##
 {{"question": "Considering AmaraTech's fiscal year 2023 report, which factor was most crucial in driving the company's revenue increase?", "correct_answer": "The QuantumX series' launch and its 15% market share gain in the first quarter significantly influenced AmaraTech's revenue upsurge.", "wrong_answer_1": "The reduction in production costs due to nano-layered graphene was key to AmaraTech's revenue growth.", "wrong_answer_2": "The sustained performance of the NanoZ series was the main driver of AmaraTech's revenue increase.", "wrong_answer_3": "A 20% increase in QuantumX production costs led to significant revenue growth due to improved quality."}}
 </Example 1>
 
@@ -153,12 +153,12 @@ Wrong Answer 3:
     3. It introduces an exaggeration by claiming dramatic cost reductions, contrary to the context.
     4. The answer is based on the context but distorts the factual information regarding cost management.
     5. It is distinct from the correct answer and the other wrong answers, ensuring a diverse set of options.
--------
+##RESPONSE##
 {{"question": "What primarily fueled BioHeal Inc.'s revenue enhancement in 2023?", "correct_answer": "The introduction and broad implementation of RegenX therapy, which accounted for a 25% revenue boost, was crucial for BioHeal Inc.'s financial upturn.", "wrong_answer_1": "The decrease in production costs for RegenX therapy was the leading factor in BioHeal's revenue surge.", "wrong_answer_2": "The strategic partnerships with hospitals and clinics, facilitating RegenX therapy's access, were pivotal for BioHeal's revenue increase.", "wrong_answer_3": "BioHeal's financial turnaround was solely due to cutting-edge biocompatible materials used in RegenX, reducing production costs dramatically."}}
 </Example 2>
 
 Rules:
-Use ------- to separate thoguhts from the JSON
+Use ##RESPONSE## to separate thoguhts from the JSON
 Make sure that length of the correct answer and wrong answers are not very different.
 Here is the input:
 

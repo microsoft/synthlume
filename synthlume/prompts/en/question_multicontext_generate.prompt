@@ -25,10 +25,10 @@ Expected Response:
 This revision aims to preserve the original intent of your prompt while enhancing clarity, specificity, and engagement. The example is aligned with the task requirements, demonstrating how to interlink information from multiple contexts to formulate a complex question and a comprehensive answer.
 Respond with the following structure:
 Analythical process
--------
+##RESPONSE##
 {{"question": question, "answer": answer}}
 
-Use ------- to separate analythical process from the resulting JSON
+Use ##RESPONSE## to separate analythical process from the resulting JSON
 
 Example:
 Chunks:
@@ -41,7 +41,7 @@ Response:
 3. Develop a question that intertwines the economic aspects with urban planning requirements in both cities.
 4. Articulate an answer highlighting City A's infrastructure expansion needs versus City B's maintenance focus.
 
--------
+##RESPONSE##
 
 {{"question": "How do City A's technological advancement and City B's stable manufacturing landscape influence their respective urban planning strategies?", "answer": "City A's burgeoning tech sector necessitates extensive housing and tech infrastructure development to accommodate its growing population, whereas City B's steady manufacturing industry allows for a focus on maintaining and modestly updating existing urban facilities."}}
 
