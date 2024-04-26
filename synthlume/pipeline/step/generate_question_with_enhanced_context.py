@@ -32,11 +32,8 @@ class GenerateQuestionWithEnhancedContextStep(JSONStep):
 
         super().__init__(llm, self.prompt_q, retries=retries)
 
-        if True:
-            self.vectorstore = FAISS.from_documents(documents, embeddings, distance_strategy=DistanceStrategy.COSINE)
-            self.vectorstore.save_local("faiss_index")
-        else:
-            self.vectorstore = FAISS.load_local("faiss_index", embeddings, distance_strategy=DistanceStrategy.COSINE, allow_dangerous_deserialization=True)
+        self.vectorstore = FAISS.from_documents(documents, embeddings, distance_strategy=DistanceStrategy.COSINE)
+        self.vectorstore.save_local("faiss_index")
         self.min_distance = min_distance
         self.max_distance = max_distance
         self.n_documents = n_documents
@@ -56,6 +53,8 @@ class GenerateQuestionWithEnhancedContextStep(JSONStep):
         most_similar = self.vectorstore.similarity_search_with_score_by_vector(embedding=embedding_vector, k=n_documents)
 
         most_similar = [(doc, 1 - score) for doc, score in most_similar]
+
+        logger.info(f"Most similar scores: {[score for _, score in most_similar]}")
 
         has_lower_limit = any([score < self.min_distance for _, score in most_similar])
         has_upper_limit = any([score > self.max_distance for _, score in most_similar])
