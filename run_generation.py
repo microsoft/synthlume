@@ -12,7 +12,7 @@ from synthlume.pipeline.step import (
     QuestionStyleSimpleStep,
     QuestionStyleCompleteSentenseStep,
     MultipleChoiceQuestionStep,
-    GenerateQuestionWithEnhancedContextStep
+    GenerateQuestionWithEnhancedContextStep,
 )
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.document_loaders import PyPDFLoader
@@ -24,10 +24,12 @@ import os
 
 load_dotenv()
 
+
 def load_and_split(path, splitter):
     loader = PyPDFLoader(path)
     documents = loader.load()
     return splitter.split_documents(documents)
+
 
 def generate_description(documents, llm):
     description_step = DescriptionStep(llm=llm, language="en")
@@ -39,6 +41,7 @@ def generate_description(documents, llm):
     description = description_step.generate(document=text)
 
     return description
+
 
 def generate_questions(llm, description, documents, output_file, filename):
     questions_generatoion_step = GenerateQuestionStep(llm=llm, language="en")
@@ -66,7 +69,7 @@ def generate_questions(llm, description, documents, output_file, filename):
             inputs = {
                 "context": chunk,
                 "description": description,
-                "current_document": metadata["source"]
+                "current_document": metadata["source"],
             }
 
             calls["input"] = inputs
@@ -80,17 +83,23 @@ def generate_questions(llm, description, documents, output_file, filename):
                 continue
 
             calls[questions_generatoion_step.name] = response
-            print(f"Base generated question: {calls[questions_generatoion_step.name]['question']}")
+            print(
+                f"Base generated question: {calls[questions_generatoion_step.name]['question']}"
+            )
             print(f"\tAnswer: {calls[questions_generatoion_step.name]['answer']}")
             print()
             print()
 
-            response = multiple_choice_step.generate(**calls[questions_generatoion_step.name])
+            response = multiple_choice_step.generate(
+                **calls[questions_generatoion_step.name]
+            )
             if response is None:
                 print(f"Could not generate multiple choice question, skipping")
             else:
                 calls[multiple_choice_step.name] = response
-                print(f"Multiple choice generated question: {calls[multiple_choice_step.name]['question']}")
+                print(
+                    f"Multiple choice generated question: {calls[multiple_choice_step.name]['question']}"
+                )
                 print(f"\tA) {calls[multiple_choice_step.name]['correct_answer']}")
                 print(f"\tB) {calls[multiple_choice_step.name]['wrong_answer_1']}")
                 print(f"\tC) {calls[multiple_choice_step.name]['wrong_answer_2']}")
@@ -112,17 +121,21 @@ def generate_questions(llm, description, documents, output_file, filename):
             print("########## ERROR ##########")
             print(f"Error: {e}")
             print("###########################")
-    
+
     return results
 
 
 ## constants
 AZURE_OPENAI_KEY = os.getenv("AZURE_OPENAI_KEY")
 AZURE_DEPLOYMENT_NAME = os.getenv("AZURE_DEPLOYMENT_NAME")
-AZURE_ENDPOINT=os.getenv("AZURE_ENDPOINT")
+AZURE_ENDPOINT = os.getenv("AZURE_ENDPOINT")
 
 base_path = "data/moodys_data"
-pdfs = [os.path.join(base_path, filename) for filename in os.listdir(base_path) if filename.endswith(".pdf")]
+pdfs = [
+    os.path.join(base_path, filename)
+    for filename in os.listdir(base_path)
+    if filename.endswith(".pdf")
+]
 
 text_splitter = RecursiveCharacterTextSplitter(
     # Set a really small chunk size, just to show.
