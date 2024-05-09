@@ -6,18 +6,14 @@ from synthlume.pipeline.step.step import Step
 from synthlume.prompts.prompt import Prompt
 from synthlume.pipeline.core.runnable import Runnable
 from synthlume.logging.logging import get_logger
+
 logger = get_logger(__name__)
 
 
 class JSONStep(Step, ABC):
     name: str = "generic_json"
 
-    def __init__(
-            self,
-            llm: LLM,
-            prompt: Prompt,
-            retries: int = 3
-        ):
+    def __init__(self, llm: LLM, prompt: Prompt, retries: int = 3):
         super().__init__(llm, prompt)
         self.retries = retries
 
@@ -34,7 +30,9 @@ class JSONStep(Step, ABC):
             try:
                 json_response = json.loads(response)
             except Exception as e:
-                logger.warning(f"Could not decode response as JSON, retrying ({r+1}/{self.retries})")
+                logger.warning(
+                    f"Could not decode response as JSON, retrying ({r+1}/{self.retries})"
+                )
                 logger.warning(f"Error: {e}")
                 logger.warning(f"Response: {response}")
                 continue
@@ -42,9 +40,8 @@ class JSONStep(Step, ABC):
             if self.validate(json_response):
                 break
             else:
-                logger.warning(f"Response did not pass validation, retrying ({r+1}/{self.retries})")
+                logger.warning(
+                    f"Response did not pass validation, retrying ({r+1}/{self.retries})"
+                )
 
         return json_response
-        
-
-

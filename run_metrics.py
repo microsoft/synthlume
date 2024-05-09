@@ -3,15 +3,13 @@ import json
 from synthlume.metrics import (
     CosineSimilarity,
     GMMWasserstein,
-    SentenceSeparabilityIndex
+    SentenceSeparabilityIndex,
 )
 import pandas as pd
 from langchain.embeddings.sentence_transformer import SentenceTransformerEmbeddings
 
 # Replace this with OpenAI embeddings as it is shown below
-embeddings = SentenceTransformerEmbeddings(
-    model_name="all-mpnet-base-v1"
-)
+embeddings = SentenceTransformerEmbeddings(model_name="all-mpnet-base-v1")
 
 base_questions = []
 multichoice_questions = []
@@ -30,10 +28,14 @@ with open("questions.jsonl", "r") as f:
         scenario_questions.append(data["scenario_question"]["question"])
         humanify_questions.append(data["humanify_question"]["question"])
         style_simple_questions.append(data["style_simple"]["question"])
-        style_complete_sentence_questions.append(data["style_complete_sentence"]["question"])
+        style_complete_sentence_questions.append(
+            data["style_complete_sentence"]["question"]
+        )
 
 
-true_questions_set = pd.read_csv("data/moodys_data/search_evaluation.csv")["Query"].tolist()
+true_questions_set = pd.read_csv("data/moodys_data/search_evaluation.csv")[
+    "Query"
+].tolist()
 
 # Use C to alternate boundaries of the metric.
 # The lower the C, the more difficult it is to distinguish between the two sets due to regularization
@@ -42,12 +44,19 @@ ssi = SentenceSeparabilityIndex(
     embeddings=embeddings,
     regression_kwargs={"C": 0.1},
 )
-gen_sentence_set = base_questions + multichoice_questions + scenario_questions + humanify_questions + style_simple_questions + style_complete_sentence_questions
+gen_sentence_set = (
+    base_questions
+    + multichoice_questions
+    + scenario_questions
+    + humanify_questions
+    + style_simple_questions
+    + style_complete_sentence_questions
+)
 
 # Calculate the SSI score
 ssi_scores, ssi_score = ssi.evaluate_scores(true_questions_set, gen_sentence_set)
 
-#In scores, score 1 means that it's virtually impossible to distinguish
+# In scores, score 1 means that it's virtually impossible to distinguish
 
 gen_qual = zip(gen_sentence_set, list(ssi_scores))
 gen_qual = sorted(gen_qual, key=lambda x: x[1], reverse=True)
@@ -79,7 +88,9 @@ print()
 
 ssi_top_100 = list(sorted(gen_qual, key=lambda x: x[1], reverse=True))[:100]
 
-ssi_scores, ssi_score = ssi.evaluate_scores(true_questions_set, [item[0] for item in ssi_top_100])
+ssi_scores, ssi_score = ssi.evaluate_scores(
+    true_questions_set, [item[0] for item in ssi_top_100]
+)
 
 print()
 print()
@@ -90,11 +101,18 @@ print()
 exit(0)
 
 cs = CosineSimilarity(embeddings=embeddings)
-gen_sentence_set = base_questions + multichoice_questions + scenario_questions + humanify_questions + style_simple_questions + style_complete_sentence_questions
+gen_sentence_set = (
+    base_questions
+    + multichoice_questions
+    + scenario_questions
+    + humanify_questions
+    + style_simple_questions
+    + style_complete_sentence_questions
+)
 # Calculate the SSI score
 cs_scores, cs_score = cs.evaluate_scores(true_questions_set, gen_sentence_set)
 
-#In scores, score 1 means that it's virtually impossible to distinguish
+# In scores, score 1 means that it's virtually impossible to distinguish
 
 gen_qual = zip(gen_sentence_set, list(cs_scores))
 gen_qual = sorted(gen_qual, key=lambda x: x[1], reverse=True)

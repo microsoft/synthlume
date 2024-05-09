@@ -12,7 +12,7 @@ from synthlume.pipeline.step import (
     QuestionStyleSimpleStep,
     QuestionStyleCompleteSentenseStep,
     MultipleChoiceQuestionStep,
-    GenerateMulticontextQuestionStep
+    GenerateMulticontextQuestionStep,
 )
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.document_loaders import PyPDFLoader
@@ -27,7 +27,7 @@ load_dotenv()
 ## constants
 AZURE_OPENAI_KEY = os.getenv("AZURE_OPENAI_KEY")
 AZURE_DEPLOYMENT_NAME = os.getenv("AZURE_DEPLOYMENT_NAME")
-AZURE_ENDPOINT=os.getenv("AZURE_ENDPOINT")
+AZURE_ENDPOINT = os.getenv("AZURE_ENDPOINT")
 
 embeddings = AzureOpenAIEmbeddings(
     openai_api_key=AZURE_OPENAI_KEY,
@@ -60,7 +60,9 @@ for question in questions:
         print(f"Could not generate multiple choice question, skipping")
     else:
         question[multiple_choice_step.name] = response
-        print(f"Multiple choice generated question: {question[multiple_choice_step.name]['question']}")
+        print(
+            f"Multiple choice generated question: {question[multiple_choice_step.name]['question']}"
+        )
         print(f"\tA) {question[multiple_choice_step.name]['correct_answer']}")
         print(f"\tB) {question[multiple_choice_step.name]['wrong_answer_1']}")
         print(f"\tC) {question[multiple_choice_step.name]['wrong_answer_2']}")
@@ -69,6 +71,3 @@ for question in questions:
     print()
 
     modified_questions_file.write(json.dumps(question) + "\n")
-
-
-

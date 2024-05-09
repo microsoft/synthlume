@@ -4,7 +4,9 @@ from synthlume.prompts.prompt import Prompt
 from synthlume.prompts.tags import Tag
 from synthlume.pipeline.core.runnable import Runnable
 from synthlume.logging.logging import get_logger
+
 logger = get_logger(__name__)
+
 
 class Step(Runnable):
     name: str = "generic"
@@ -18,6 +20,17 @@ class Step(Runnable):
         self.prompt = prompt
         super().__init__()
 
+    @staticmethod
+    def _try_load_prompt(language: str, name: str) -> Prompt:
+        try:
+            prompt = Prompt.from_data(language, name)
+        except FileNotFoundError:
+            logger.warning(
+                f"Could not find prompt for language {language}, using default"
+            )
+            prompt = None
+
+        return prompt
 
     def _generate(self, **kwargs) -> any:
         logger.debug(f"Prompt keys: {', '.join(self.prompt.keys)}")
@@ -32,7 +45,9 @@ class Step(Runnable):
                 f"\n{kwargs['custom_instruction']}\n"
             )
 
-        prompt_text = self.prompt.text.format(**{key: kwargs[key] for key in self.prompt.keys})
+        prompt_text = self.prompt.text.format(
+            **{key: kwargs[key] for key in self.prompt.keys}
+        )
 
         logger.info(f"Prompt text:\n{prompt_text}")
 
@@ -48,7 +63,9 @@ class Step(Runnable):
                 cot, response = response.split("##RESPONSE##")
                 logger.info(f"CoT:\n{cot}")
             except ValueError:
-                logger.debug(f"Could not split response into chain of thought and response, returning full response")
+                logger.debug(
+                    f"Could not split response into chain of thought and response, returning full response"
+                )
                 cot = ""
 
             logger.debug(f"Chain of thought:\n{cot}")
