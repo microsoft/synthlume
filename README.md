@@ -80,11 +80,23 @@ AZURE_DEPLOYMENT_NAME=<the name of your gpt-4 deployment>
 
 ### Option 1: Python Script
 
-Once your python enviroment has been activated, run:
+The run_generation.py file is an example script provided in the project to demonstrate how to run the text generation functionality. It serves as a starting point for running experiments with the SynthLume tool.
 
-```
-python -m run_generation.py
-```
+Inside the run_generation.py file, you will find the code that sets up the necessary environment and executes the text generation process. Let's take a closer look at what's going on inside the file:
+
+Importing Dependencies: The script begins by importing the necessary dependencies and modules required for text generation. These may include libraries for interacting with the SynthLume API, handling data, or performing natural language processing tasks.
+
+Setting Up Configuration: Next, the script sets up the configuration parameters for the text generation process. This includes specifying the input data, desired output format, generation settings, and any other relevant options.
+
+Loading Data: The script may load the required data for text generation. This could involve reading from files, querying a database, or retrieving data from an external source. The data serves as the input for generating the desired text.
+
+Text Generation: The main part of the script involves generating the text based on the provided input and configuration. This could be done using machine learning models, rule-based systems, or other techniques. The generated text is typically stored in a variable or written to an output file.
+
+Post-processing: After the text generation process, the script may perform post-processing tasks on the generated text. This could include cleaning up the output, formatting it for readability, or applying any necessary transformations.
+
+Output: Finally, the script may display or save the generated text as the output of the text generation process. This could involve printing the text to the console, writing it to a file, or sending it to another system for further processing.
+
+It's important to note that the specific implementation details of the run_generation.py file may vary depending on the project and the requirements of the text generation task. The example script provided in your project serves as a starting point that can be customized and extended to meet your specific needs.
 
 ### Option 2: Jupyter notebook
 
