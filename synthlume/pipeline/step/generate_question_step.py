@@ -2,6 +2,8 @@ import os
 from copy import deepcopy
 
 from langchain_core.language_models.llms import LLM
+from langchain_core.documents import Document
+
 from synthlume.pipeline.step.json_step import JSONStep
 from synthlume.prompts.prompt import Prompt
 from synthlume.logging.logging import get_logger
@@ -52,9 +54,9 @@ class GenerateQuestionStep(JSONStep):
         return True
 
     def _generate(
-        self, context: str, description: str = None, examples: str = None, **kwargs
+        self, context: Document, description: str = None, examples: str = None, **kwargs
     ) -> dict[any]:
-        kwargs["context"] = context
+        kwargs["context"] = context.page_content
 
         if description is not None:
             self.prompt = self.prompt_qd
@@ -77,5 +79,6 @@ class GenerateQuestionStep(JSONStep):
 
         kwargs["question"] = response["question"]
         kwargs["answer"] = response["answer"]
+        kwargs["context"] = context
 
         return kwargs

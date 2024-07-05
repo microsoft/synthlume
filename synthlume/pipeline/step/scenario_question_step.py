@@ -1,6 +1,8 @@
 from copy import deepcopy
 
 from langchain_core.language_models.llms import LLM
+from langchain_core.documents import Document
+
 from synthlume.pipeline.step.json_step import JSONStep
 from synthlume.prompts.prompt import Prompt
 from synthlume.logging.logging import get_logger
@@ -29,14 +31,14 @@ class ScenarioQuestionStep(JSONStep):
 
     def _generate(
         self,
-        context: str,
+        context: Document,
         question: str,
         answer: str,
         custom_instruction: str = "\n",
         **kwargs,
     ) -> dict[any]:
         output = {
-            "context": context,
+            "context": context.page_content,
             "question": question,
             "answer": answer,
             "custom_instruction": custom_instruction,
@@ -50,5 +52,5 @@ class ScenarioQuestionStep(JSONStep):
 
         output["question"] = response["question"]
         output["answer"] = response["answer"]
-
+        output["context"] = context
         return output

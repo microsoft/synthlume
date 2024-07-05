@@ -64,9 +64,9 @@ class GenerateQuestionWithEnhancedContextStep(JSONStep):
         return True
 
     def _try_get_contexts(
-        self, query: str, n_documents, exclude_document: str = None
-    ) -> list[str]:
-        embedding_vector = self.vectorstore._embed_query(query)
+        self, query: Document, n_documents, exclude_document: str = None
+    ) -> list[Document]:
+        embedding_vector = self.vectorstore._embed_query(query.page_content)
         most_similar = self.vectorstore.similarity_search_with_score_by_vector(
             embedding=embedding_vector, k=n_documents
         )
@@ -95,16 +95,16 @@ class GenerateQuestionWithEnhancedContextStep(JSONStep):
 
         if len(filtered) >= self.n_documents:
             filtered = filtered[: self.n_documents]
-            return [doc.page_content for doc, _ in filtered]
+            return [doc for doc, _ in filtered]
 
         if has_lower_limit and has_upper_limit:
-            return [doc.page_content for doc, _ in filtered]
+            return [doc for doc, _ in filtered]
 
         return self._try_get_contexts(query, 2 * n_documents)
 
     def _generate(
         self,
-        context: str,
+        context: Document,
         description: str = None,
         current_document: str = None,
         custom_instruction: str = "\n",
@@ -116,7 +116,7 @@ class GenerateQuestionWithEnhancedContextStep(JSONStep):
 
         contexts.append(context)
 
-        merged_context = [f"Context {i+1}:\n{c}" for i, c in enumerate(contexts)]
+        merged_context = [f"Context {i+1}:\n{c.page_content}" for i, c in enumerate(contexts)]
         merged_context = "\n\n".join(merged_context)
 
         output = {"context": merged_context, "custom_instruction": custom_instruction}
@@ -139,6 +139,6 @@ class GenerateQuestionWithEnhancedContextStep(JSONStep):
 
         output["question"] = response["question"]
         output["answer"] = response["answer"]
-        output["raw_contexts"] = contexts
+        output["context"] = contexts
 
         return output

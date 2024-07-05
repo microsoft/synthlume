@@ -62,7 +62,7 @@ def generate_questions(llm, description, documents, output_file, filename):
             break
         try:
             metadata = chunk.metadata
-            chunk = chunk.page_content
+            chunk = chunk
             print(f"Chunk {steps_done+1}/{max_steps}")
             calls = {}
 
