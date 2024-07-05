@@ -2,13 +2,10 @@ import os
 from copy import deepcopy
 
 from langchain_core.language_models.llms import LLM
-from langchain_core.embeddings import Embeddings
-from langchain.vectorstores.faiss import FAISS
-from langchain_core.documents import Document
-from langchain_community.vectorstores.utils import DistanceStrategy
 
 from synthlume.pipeline.step.json_step import JSONStep
 from synthlume.prompts.prompt import Prompt
+from langchain_core.documents import Document
 from synthlume.logging.logging import get_logger
 
 logger = get_logger(__name__)
@@ -52,12 +49,12 @@ class GenerateMulticontextQuestionStep(JSONStep):
 
     def _generate(
         self,
-        contexts: list[str],
+        contexts: list[Document],
         description: str = None,
         custom_instruction: str = "\n",
         **kwargs,
     ) -> dict[any]:
-        merged_context = [f"Context {i+1}:\n{c}" for i, c in enumerate(contexts)]
+        merged_context = [f"Context {i+1}:\n{c.page_content}" for i, c in enumerate(contexts)]
         merged_context = "\n\n".join(merged_context)
 
         output = {"context": merged_context, "custom_instruction": custom_instruction}
@@ -80,6 +77,6 @@ class GenerateMulticontextQuestionStep(JSONStep):
 
         output["question"] = response["question"]
         output["answer"] = response["answer"]
-        output["raw_contexts"] = contexts
+        output["context"] = contexts
 
         return output
