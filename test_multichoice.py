@@ -13,6 +13,7 @@ from synthlume.pipeline.step import (
     QuestionStyleCompleteSentenseStep,
     MultipleChoiceQuestionStep,
     GenerateMulticontextQuestionStep,
+    GenerateQuestionThinkingProcess,
 )
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.document_loaders import PyPDFLoader

@@ -1,5 +1,5 @@
 import random
-import json
+import copy
 
 from langchain_openai import AzureOpenAIEmbeddings
 from langchain_openai import AzureChatOpenAI
@@ -13,11 +13,12 @@ from synthlume.pipeline.step import (
     QuestionStyleCompleteSentenseStep,
     MultipleChoiceQuestionStep,
     GenerateQuestionWithEnhancedContextStep,
+    GenerateQuestionThinkingProcess,
+    GenerateQuestionFromSamples,
 )
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.document_loaders import PyPDFLoader
 from langchain.embeddings.sentence_transformer import SentenceTransformerEmbeddings
-import pandas as pd
 
 from dotenv import load_dotenv
 import os
@@ -50,6 +51,7 @@ def generate_questions(llm, description, documents, output_file, filename):
     question_style_simple_step = QuestionStyleSimpleStep(llm=llm, language="en")
     complete_sentence_step = QuestionStyleCompleteSentenseStep(llm=llm, language="en")
     multiple_choice_step = MultipleChoiceQuestionStep(llm=llm, language="en")
+    generate_from_samples_step = GenerateQuestionFromSamples(llm=llm, language="en")
 
     results = []
 
@@ -73,50 +75,25 @@ def generate_questions(llm, description, documents, output_file, filename):
             }
 
             calls["input"] = inputs
-
-            response = multicontext_generation_step.generate(**inputs)
-
-            # response = questions_generatoion_step.generate(**inputs)
-
-            if response is None:
-                print(f"Could not generate question, skipping")
-                continue
-
-            calls[questions_generatoion_step.name] = response
-            print(
-                f"Base generated question: {calls[questions_generatoion_step.name]['question']}"
-            )
-            print(f"\tAnswer: {calls[questions_generatoion_step.name]['answer']}")
-            print()
-            print()
-
-            response = multiple_choice_step.generate(
-                **calls[questions_generatoion_step.name]
-            )
-            if response is None:
-                print(f"Could not generate multiple choice question, skipping")
-            else:
-                calls[multiple_choice_step.name] = response
-                print(
-                    f"Multiple choice generated question: {calls[multiple_choice_step.name]['question']}"
-                )
-                print(f"\tA) {calls[multiple_choice_step.name]['correct_answer']}")
-                print(f"\tB) {calls[multiple_choice_step.name]['wrong_answer_1']}")
-                print(f"\tC) {calls[multiple_choice_step.name]['wrong_answer_2']}")
-                print(f"\tD) {calls[multiple_choice_step.name]['wrong_answer_3']}")
-
-            print()
-            print()
-            print("     --------     ")
-            print()
-            print()
-
-            calls["filename"] = filename
-
-            output_file.write(json.dumps(calls) + "\n")
-
-            results.append(calls)
-            steps_done += 1
+            
+            samples_response = sampling_generation.generate(**inputs)
+            
+            generation = generate_from_samples_step.generate(**samples_response)
+            
+            for option in generation["questions"]:
+                print()
+                print(f"Question: {option['question']}")
+                print(f"Answer: {option['answer']}")
+                print()
+                
+            flatten = []
+            for option in generation["questions"]:
+                item = copy.deepcopy(generation)
+                del item["questions"]
+                item["question"] = option["question"]
+                item["answer"] = option["answer"]
+                flatten.append(item)
+                
         except Exception as e:
             print("########## ERROR ##########")
             print(f"Error: {e}")
@@ -151,15 +128,34 @@ embeddings = AzureOpenAIEmbeddings(
     openai_api_key=AZURE_OPENAI_KEY,
     azure_endpoint=AZURE_ENDPOINT,
     azure_deployment="text-embedding-ada-002",
-    openai_api_version="2023-08-01-preview",
+    openai_api_version="2024-09-01-preview",
 )
 
 llm = AzureChatOpenAI(
     openai_api_key=AZURE_OPENAI_KEY,
     azure_endpoint=AZURE_ENDPOINT,
-    openai_api_version="2023-08-01-preview",
+    openai_api_version="2024-09-01-preview",
     deployment_name=AZURE_DEPLOYMENT_NAME,
     temperature=0.9,
+)
+
+llm_small = AzureChatOpenAI(
+    openai_api_key=AZURE_OPENAI_KEY,
+    azure_endpoint=AZURE_ENDPOINT,
+    openai_api_version="2024-09-01-preview",
+    deployment_name="gpt-4o-mini",
+    temperature=0.9,
+)
+
+sampling_generation = GenerateQuestionThinkingProcess(
+    llm=llm_small,
+    language="en",
+    documents=all_documents,
+    embeddings=embeddings,
+    n_samples=15,
+    n_documents=10,
+    min_distance=0.85,
+    max_distance=0.98,
 )
 
 
@@ -176,7 +172,7 @@ multicontext_generation_step = GenerateQuestionWithEnhancedContextStep(
 for pdf in pdfs[1:]:
     print(f"Processing {pdf}")
     documents = load_and_split(pdf, text_splitter)
-    description = generate_description(documents, llm)
+    description = None#generate_description(documents, llm)
     with open("questions.jsonl", "a") as output_file:
         results = generate_questions(llm, description, documents, output_file, pdf)
         print(f"Generated {len(results)} questions for {pdf}")

@@ -1,0 +1,43 @@
+Your task is to create a question and answer pair from provided pieces of documents. You will be given chunks of documents and must follow specific rules while generating a question.
+
+Rules for Crafting Questions:
+1. The question should be understandable and meaningful on its own, without needing the document chunks for context.
+2. The question must require information from at least two different chunks for a comprehensive answer.
+3. Avoid including direct references or links to the text within your question.
+4. Ensure the question is complex and demonstrates a deep understanding of the document chunks.
+5. Do not use phrases that refer back to this task or its instructions, such as "in the provided chunk".
+6. Make the question as complex as you can, don't resort to simple questions.
+7. Analyze if generated question can be answered without contexts. If so, change the question.
+
+Rules for Crafting Answers:
+1. The answer should stand alone without referring back to the document or containing document-specific citations, like "Table 2.1".
+2. The answer must directly address the question, fully encapsulated within the provided chunks.
+
+Task Execution:
+ - Start by analyzing the provided chunks to identify key themes, relationships, and insights across multiple contexts.
+ - Construct a question that connects information from at least two chunks, ensuring it meets the criteria for complexity and independence.
+ - Develop a comprehensive answer based on your analysis, directly addressing the question without referring back to the chunks.
+{custom_instruction}
+
+Detail and write down your thinking process. Be verbose and expklain why you are generating that particular question.
+
+Chunks:
+{context}
+
+Detail and write down your thinking process. Be verbose and expklain why you are generating that particular question.
+
+WRITE DOWN YOUR RESPONSE IN A PLAIN TEXT.
+Start with your logic, describing what could be asked about the text.
+BEWARE THAT YOU ARE GIVEN BUNCH OF DIFFERENT TEXTS. Find a common thing between them.
+BUT NOT TOO VAGUE. IF NEEDED JUST IGNORE SOME OF THE TEXTS.
+
+Then formulate appropriate quesrtions about the text and explain why.
+
+Finish by repeating the generating question.
+
+Be verbose and spend most of the time on thinking about the question. It should be relevant, engaging and should NOT directly link to a document, but should be answerable from it.
+Also provide the answer to the question!
+
+During thinking explain, how each chunk related to the question, what relevant information it contains.
+
+Response:
