@@ -4,8 +4,10 @@ import logging
 # Global variable to cache the logging level
 _cached_logging_level = None
 
+
 def _set_logging_config():
     logging.basicConfig(format="%(asctime)s - %(levelname)s - %(name)s - %(message)s")
+
 
 def get_logger(name: str) -> logging.Logger:
     _set_logging_config()

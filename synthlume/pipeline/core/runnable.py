@@ -1,24 +1,25 @@
 from abc import ABC, abstractmethod
 from typing import Any
 
+
 class Runnable(ABC):
     def __init__(self) -> None:
         super().__init__()
-        self.first: 'Runnable' = self
-        self.next: 'Runnable' = None
-        self.prev: 'Runnable' = None
-        self.current: 'Runnable' = self
+        self.first: "Runnable" = self
+        self.next: "Runnable" = None
+        self.prev: "Runnable" = None
+        self.current: "Runnable" = self
 
-    def __or__(self, other) -> 'Runnable':
+    def __or__(self, other) -> "Runnable":
         other = coerse_to_runnable(other)
-        
+
         self.next = other
         other.prev = self
         other.first = self.first
 
         return other
-        
-    def __ror__(self, other) -> 'Runnable':
+
+    def __ror__(self, other) -> "Runnable":
         other = coerse_to_runnable(other)
 
         self.prev = other
@@ -26,11 +27,11 @@ class Runnable(ABC):
             self.first = other.first
         else:
             self.first = other
-        
+
         other.next = self
         return self
-    
-    def __and__(self, other) -> 'Runnable':
+
+    def __and__(self, other) -> "Runnable":
         other = coerse_to_runnable(other)
 
         if isinstance(self, RunnableParallel):
@@ -47,8 +48,8 @@ class Runnable(ABC):
             other.prev = self.prev
             other.first = self.first
             return RunnableParallel(self, other)
-        
-    def __rand__(self, other) -> 'Runnable':
+
+    def __rand__(self, other) -> "Runnable":
         other = coerse_to_runnable(other)
 
         if isinstance(self, RunnableParallel):
@@ -79,8 +80,9 @@ class Runnable(ABC):
                 run_args.update(result)
 
             current = current.next
-        
+
         return run_args
+
 
 class RunnableParallel(Runnable):
     def __init__(self, *args: Runnable) -> None:
@@ -91,10 +93,11 @@ class RunnableParallel(Runnable):
         results = []
         for runnable in self.runnables:
             result = runnable.generate(**kwargs)
-            
+
             results.append(result)
 
         return results
+
 
 class RunnableConst(Runnable):
     def __init__(self, value: any) -> None:
@@ -103,6 +106,7 @@ class RunnableConst(Runnable):
 
     def _generate(self, **kwargs) -> any:
         return self.value
+
 
 def coerse_to_runnable(value: any) -> Runnable:
     if isinstance(value, Runnable):

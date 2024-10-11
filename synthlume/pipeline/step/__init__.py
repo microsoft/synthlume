@@ -18,5 +18,5 @@ from synthlume.pipeline.step.generate_question_thinking_process import (
     GenerateQuestionThinkingProcess,
 )
 from synthlume.pipeline.step.generate_question_from_samples import (
-    GenerateQuestionFromSamples
+    GenerateQuestionFromSamples,
 )

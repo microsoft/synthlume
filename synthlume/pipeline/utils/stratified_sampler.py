@@ -22,9 +22,9 @@ class StratifiedSampler(ABC):
         documents: list[Document],
         **kwargs: Any,
     ):
-        self.documents = (
-            deepcopy(documents)  # List of input documents that we want to sample from
-        )
+        self.documents = deepcopy(
+            documents
+        )  # List of input documents that we want to sample from
 
     @abstractmethod
     def _stratification_method(

@@ -75,17 +75,17 @@ def generate_questions(llm, description, documents, output_file, filename):
             }
 
             calls["input"] = inputs
-            
+
             samples_response = sampling_generation.generate(**inputs)
-            
+
             generation = generate_from_samples_step.generate(**samples_response)
-            
+
             for option in generation["questions"]:
                 print()
                 print(f"Question: {option['question']}")
                 print(f"Answer: {option['answer']}")
                 print()
-                
+
             flatten = []
             for option in generation["questions"]:
                 item = copy.deepcopy(generation)
@@ -93,7 +93,7 @@ def generate_questions(llm, description, documents, output_file, filename):
                 item["question"] = option["question"]
                 item["answer"] = option["answer"]
                 flatten.append(item)
-                
+
         except Exception as e:
             print("########## ERROR ##########")
             print(f"Error: {e}")
@@ -172,7 +172,7 @@ multicontext_generation_step = GenerateQuestionWithEnhancedContextStep(
 for pdf in pdfs[1:]:
     print(f"Processing {pdf}")
     documents = load_and_split(pdf, text_splitter)
-    description = None#generate_description(documents, llm)
+    description = None  # generate_description(documents, llm)
     with open("questions.jsonl", "a") as output_file:
         results = generate_questions(llm, description, documents, output_file, pdf)
         print(f"Generated {len(results)} questions for {pdf}")

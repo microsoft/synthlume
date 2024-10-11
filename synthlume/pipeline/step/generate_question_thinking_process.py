@@ -37,11 +37,15 @@ class GenerateQuestionThinkingProcess(Step):
         )
 
         super().__init__(llm, self.prompt_q)
-        
+
         self.n_samples = n_samples
 
         if os.path.exists("faiss_index"):
-            self.vectorstore = FAISS.load_local("faiss_index", embeddings=embeddings, allow_dangerous_deserialization=True)
+            self.vectorstore = FAISS.load_local(
+                "faiss_index",
+                embeddings=embeddings,
+                allow_dangerous_deserialization=True,
+            )
         else:
             self.vectorstore = FAISS.from_documents(
                 documents, embeddings, distance_strategy=DistanceStrategy.COSINE
@@ -96,11 +100,13 @@ class GenerateQuestionThinkingProcess(Step):
         description: str = None,
         custom_instruction: str = "\n",
     ) -> str:
-        merged_context = [f"Context {i+1}:\n{c.page_content}" for i, c in enumerate(contexts)]
+        merged_context = [
+            f"Context {i+1}:\n{c.page_content}" for i, c in enumerate(contexts)
+        ]
         merged_context = "\n\n".join(merged_context)
-        
+
         output = {"context": merged_context, "custom_instruction": custom_instruction}
-        
+
         if description is not None:
             self.prompt = self.prompt
             output["description"] = description
@@ -110,7 +116,7 @@ class GenerateQuestionThinkingProcess(Step):
         ), "Prompt not set. Probably it was not loaded properly"
 
         response = super()._generate(**output)
-        
+
         return response
 
     def _generate(
@@ -126,20 +132,24 @@ class GenerateQuestionThinkingProcess(Step):
         )
 
         contexts.append(context)
-        
-        merged_context = [f"Context {i+1}:\n{c.page_content}" for i, c in enumerate(contexts)]
+
+        merged_context = [
+            f"Context {i+1}:\n{c.page_content}" for i, c in enumerate(contexts)
+        ]
         merged_context = "\n\n".join(merged_context)
-        
+
         output = {"context": merged_context, "custom_instruction": custom_instruction}
 
         responses = []
-        
+
         for i in range(self.n_samples):
             logger.info(f"Generating sample {i}")
             responses.append(
-                self._generate_single_response(contexts, description, custom_instruction)
+                self._generate_single_response(
+                    contexts, description, custom_instruction
+                )
             )
-        
+
         responses = filter(lambda x: x is not None, responses)
 
         output["variants"] = list(responses)

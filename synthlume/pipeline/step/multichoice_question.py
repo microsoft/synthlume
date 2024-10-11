@@ -60,7 +60,7 @@ class MultipleChoiceQuestionStep(JSONStep):
 
         for key in self.response_keys:
             output[key] = response[key]
-            
+
         output["context"] = context
 
         return output

@@ -54,7 +54,9 @@ class GenerateMulticontextQuestionStep(JSONStep):
         custom_instruction: str = "\n",
         **kwargs,
     ) -> dict[any]:
-        merged_context = [f"Context {i+1}:\n{c.page_content}" for i, c in enumerate(contexts)]
+        merged_context = [
+            f"Context {i+1}:\n{c.page_content}" for i, c in enumerate(contexts)
+        ]
         merged_context = "\n\n".join(merged_context)
 
         output = {"context": merged_context, "custom_instruction": custom_instruction}
