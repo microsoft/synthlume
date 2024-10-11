@@ -14,3 +14,9 @@ from synthlume.pipeline.step.generate_multicontext_question import (
 from synthlume.pipeline.step.generate_question_with_enhanced_context import (
     GenerateQuestionWithEnhancedContextStep,
 )
+from synthlume.pipeline.step.generate_question_thinking_process import (
+    GenerateQuestionThinkingProcess,
+)
+from synthlume.pipeline.step.generate_question_from_samples import (
+    GenerateQuestionFromSamples
+)

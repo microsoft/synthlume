@@ -7,15 +7,15 @@ from langchain.vectorstores.faiss import FAISS
 from langchain_core.documents import Document
 from langchain_community.vectorstores.utils import DistanceStrategy
 
-from synthlume.pipeline.step.json_step import JSONStep
+from synthlume.pipeline.step.step import Step
 from synthlume.prompts.prompt import Prompt
 from synthlume.logging.logging import get_logger
 
 logger = get_logger(__name__)
 
 
-class GenerateQuestionWithEnhancedContextStep(JSONStep):
-    name: str = "enchanced_context_question"
+class GenerateQuestionThinkingProcess(Step):
+    name: str = "qa_gen_sampling"
 
     def __init__(
         self,
@@ -23,25 +23,22 @@ class GenerateQuestionWithEnhancedContextStep(JSONStep):
         documents: list[Document],
         llm: LLM,
         language: str,
+        n_samples: int = 5,
         n_documents: int = 3,
         min_distance: float = 0.5,
         max_distance: float = 0.95,
         retries: int = 3,
         prompt_base: Prompt = None,
-        prompt_desc: Prompt = None,
     ):
         self.prompt_q = (
             prompt_base
             if prompt_base
-            else self._try_load_prompt(language, "question_multicontext_generate")
-        )
-        self.prompt_qd = (
-            prompt_desc
-            if prompt_desc
-            else self._try_load_prompt(language, "question_multicontext_generate_d")
+            else self._try_load_prompt(language, "question_thinking_generate")
         )
 
-        super().__init__(llm, self.prompt_q, retries=retries)
+        super().__init__(llm, self.prompt_q)
+        
+        self.n_samples = n_samples
 
         if os.path.exists("faiss_index"):
             self.vectorstore = FAISS.load_local("faiss_index", embeddings=embeddings, allow_dangerous_deserialization=True)
@@ -54,18 +51,6 @@ class GenerateQuestionWithEnhancedContextStep(JSONStep):
         self.max_distance = max_distance
         self.n_documents = n_documents
 
-    def validate(self, json_response: any) -> bool:
-        if not isinstance(json_response, dict):
-            return False
-        if "question" not in json_response or "answer" not in json_response:
-            return False
-        if not isinstance(json_response["question"], str) or not isinstance(
-            json_response["answer"], str
-        ):
-            return False
-
-        return True
-
     def _try_get_contexts(
         self, query: Document, n_documents, exclude_document: str = None
     ) -> list[Document]:
@@ -76,7 +61,7 @@ class GenerateQuestionWithEnhancedContextStep(JSONStep):
 
         most_similar = [(doc, 1 - score) for doc, score in most_similar]
 
-        logger.info(f"Most similar scores: {[score for _, score in most_similar]}")
+        logger.debug(f"Most similar scores: {[score for _, score in most_similar]}")
 
         has_lower_limit = any([score < self.min_distance for _, score in most_similar])
         has_upper_limit = any([score > self.max_distance for _, score in most_similar])
@@ -105,6 +90,29 @@ class GenerateQuestionWithEnhancedContextStep(JSONStep):
 
         return self._try_get_contexts(query, 2 * n_documents)
 
+    def _generate_single_response(
+        self,
+        contexts: list[Document],
+        description: str = None,
+        custom_instruction: str = "\n",
+    ) -> str:
+        merged_context = [f"Context {i+1}:\n{c.page_content}" for i, c in enumerate(contexts)]
+        merged_context = "\n\n".join(merged_context)
+        
+        output = {"context": merged_context, "custom_instruction": custom_instruction}
+        
+        if description is not None:
+            self.prompt = self.prompt
+            output["description"] = description
+
+        assert (
+            self.prompt is not None
+        ), "Prompt not set. Probably it was not loaded properly"
+
+        response = super()._generate(**output)
+        
+        return response
+
     def _generate(
         self,
         context: Document,
@@ -118,30 +126,23 @@ class GenerateQuestionWithEnhancedContextStep(JSONStep):
         )
 
         contexts.append(context)
-
+        
         merged_context = [f"Context {i+1}:\n{c.page_content}" for i, c in enumerate(contexts)]
         merged_context = "\n\n".join(merged_context)
-
+        
         output = {"context": merged_context, "custom_instruction": custom_instruction}
 
-        if description is not None:
-            self.prompt = self.prompt_qd
-            output["description"] = description
+        responses = []
+        
+        for i in range(self.n_samples):
+            logger.info(f"Generating sample {i}")
+            responses.append(
+                self._generate_single_response(contexts, description, custom_instruction)
+            )
+        
+        responses = filter(lambda x: x is not None, responses)
 
-        assert (
-            self.prompt is not None
-        ), "Prompt not set. Probably it was not loaded properly"
-
-        logger.debug(f"Using prompt {os.path.basename(self.prompt.path)}")
-
-        response = super()._generate(**output)
-
-        if response is None:
-            logger.warning(f"Could not generate question, returning None")
-            return None
-
-        output["question"] = response["question"]
-        output["answer"] = response["answer"]
+        output["variants"] = list(responses)
         output["context"] = contexts
 
         return output

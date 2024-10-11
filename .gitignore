@@ -414,3 +414,5 @@ data/
 .DS_Store/
 .DS_Store/
 finetuned_models/
+faiss_index/
+questions.jsonl

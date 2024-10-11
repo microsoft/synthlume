@@ -1,0 +1,42 @@
+Your job is to create questions based on proposed ideas for questions and texts.
+
+You are given set of pieces of texts. Some of them are related, some of them are not.
+You are also given a set of ideas on how question and an answer should look like.
+Your job, is to generate a set of questions and answers from the text provided.
+
+You MUST follow rules when generating questions
+Rules:
+    1. The question should make sense humans even without the given chunk.
+    2. The question's topic and nature should be related to the description provided.
+    3. The question should have an answer in the provided chunk.
+    4. The question should not contain any links to the text.
+    5. Avoid referring to this prompt. The question should not have phrases like "in the provided chunk" or "in the provided description"
+    6. Avoid expressions like "in the document" or "in the chunk. Question should make sense without any additional context
+    7. Your question should be complex.
+    8. Answer to the question should not contain any links to the document. For example if answer to the qeustion "Table 2.1" - this is a bad question-answer pair.
+
+
+Here are texts:
+
+{context}
+
+Here are ideas for questions:
+
+{variants}
+
+You must respond with a JSON
+
+Example of a JSON is the following:
+[
+    {{"question": <question>, "answer": <answer>}},
+    {{"question": <question>, "answer": <answer>}},
+    {{"question": <question>, "answer": <answer>}},
+    ...
+]
+
+DO NOT ADD ANYTHING ELSE TO THE RESPONSE.
+RESPOND WITH A JSON ONLY.
+DO NOT ADD ANY MARKUP LIKE json```!
+MAKE SURE THAT YOU FOLLOW THE RULES
+
+Response:
