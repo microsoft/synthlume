@@ -36,7 +36,10 @@ class GenerateQuestionFromSamples(JSONStep):
             return False
         if not all("question" in item or "answer" in item for item in json_response):
             return False
-        if not all(isinstance(item["question"], str) or isinstance(item["answer"], str) for item in json_response):
+        if not all(
+            isinstance(item["question"], str) or isinstance(item["answer"], str)
+            for item in json_response
+        ):
             return False
         return True
 
@@ -50,7 +53,7 @@ class GenerateQuestionFromSamples(JSONStep):
         ), "Prompt not set. Probably it was not loaded properly"
 
         logger.debug(f"Using prompt {os.path.basename(self.prompt.path)}")
-        
+
         kwargs["variants"] = "\n\n".join(variants)
 
         response = super()._generate(**kwargs)

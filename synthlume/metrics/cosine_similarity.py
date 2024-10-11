@@ -7,15 +7,16 @@ from synthlume.logging.logging import get_logger
 
 logger = get_logger(__name__)
 
+
 class CosineSimilarity(Metric):
     embeddings: Embeddings
 
     def __init__(
-            self,
-            embeddings: Embeddings,
-        ):
+        self,
+        embeddings: Embeddings,
+    ):
         self.embeddings = embeddings
-    
+
     def _calculate_embeddings(self, sentences: list[str]) -> np.array:
         logger.debug(f"Calculating embeddings for {len(sentences)} sentences")
         return np.asarray(self.embeddings.embed_documents(sentences))
@@ -32,7 +33,9 @@ class CosineSimilarity(Metric):
         return max(scores), argmax
 
     def evaluate_scores(self, sentences_true: list[str], sentences_pred: list[str]):
-        logger.debug(f"Evaluating {len(sentences_pred)} sentences against {len(sentences_true)} sentences")
+        logger.debug(
+            f"Evaluating {len(sentences_pred)} sentences against {len(sentences_true)} sentences"
+        )
         scores = []
         y_true = self._calculate_embeddings(sentences_true)
 

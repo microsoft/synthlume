@@ -44,7 +44,11 @@ class GenerateQuestionWithEnhancedContextStep(JSONStep):
         super().__init__(llm, self.prompt_q, retries=retries)
 
         if os.path.exists("faiss_index"):
-            self.vectorstore = FAISS.load_local("faiss_index", embeddings=embeddings, allow_dangerous_deserialization=True)
+            self.vectorstore = FAISS.load_local(
+                "faiss_index",
+                embeddings=embeddings,
+                allow_dangerous_deserialization=True,
+            )
         else:
             self.vectorstore = FAISS.from_documents(
                 documents, embeddings, distance_strategy=DistanceStrategy.COSINE
@@ -119,7 +123,9 @@ class GenerateQuestionWithEnhancedContextStep(JSONStep):
 
         contexts.append(context)
 
-        merged_context = [f"Context {i+1}:\n{c.page_content}" for i, c in enumerate(contexts)]
+        merged_context = [
+            f"Context {i+1}:\n{c.page_content}" for i, c in enumerate(contexts)
+        ]
         merged_context = "\n\n".join(merged_context)
 
         output = {"context": merged_context, "custom_instruction": custom_instruction}
